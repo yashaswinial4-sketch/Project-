@@ -6,8 +6,35 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
 }
 
 /* ── Smooth Scroll ── */
@@ -37,4 +64,14 @@ html {
 ::selection {
   background-color: #a7f3d0;
   color: #065f46;
+}
+
+/* ── Border width utility ── */
+.border-3 {
+  border-width: 3px;
+}
+
+/* ── Font ── */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }

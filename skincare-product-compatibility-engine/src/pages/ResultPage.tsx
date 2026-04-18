@@ -1,14 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { AnalysisResult } from '../types';
+import { useSkinContext } from '../context/SkinContext';
 import ResultDisplay from '../components/ResultDisplay';
-import { ArrowLeft, RefreshCw, Home } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Home, Target } from 'lucide-react';
 
 const ResultPage: React.FC = () => {
   const navigate = useNavigate();
+  const { detectedSkinType, detectionMethod, detectionConfidence } = useSkinContext();
 
   const resultStr = sessionStorage.getItem('analysisResult');
-  const skinType = sessionStorage.getItem('skinType') || 'oily';
+  const manualSkinType = sessionStorage.getItem('skinType') || '';
+  const skinType = detectedSkinType || manualSkinType || 'oily';
 
   if (!resultStr) {
     return (
@@ -56,9 +59,17 @@ const ResultPage: React.FC = () => {
           <h1 className="text-3xl md:text-4xl font-black text-gray-800 mb-3">
             Your Skincare Analysis Results
           </h1>
-          <p className="text-lg text-gray-500">
-            Based on your <span className="font-bold text-emerald-600 capitalize">{skinType}</span> skin type
-          </p>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <p className="text-lg text-gray-500">
+              Based on your <span className="font-bold text-emerald-600 capitalize">{skinType}</span> skin type
+            </p>
+            {detectedSkinType && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-violet-100 text-violet-700 rounded-full text-xs font-semibold">
+                <Target size={12} />
+                Detected via {detectionMethod} ({Math.round(detectionConfidence * 100)}%)
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Results */}
@@ -72,6 +83,13 @@ const ResultPage: React.FC = () => {
           >
             <RefreshCw size={20} />
             Re-Analyze Routine
+          </button>
+          <button
+            onClick={() => navigate('/skin-type')}
+            className="flex items-center gap-2 px-8 py-4 bg-violet-600 text-white rounded-2xl font-bold text-lg hover:bg-violet-700 transition-all shadow-lg hover:shadow-xl"
+          >
+            <Target size={20} />
+            Detect Skin Type
           </button>
           <button
             onClick={() => navigate('/')}

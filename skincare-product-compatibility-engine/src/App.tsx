@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import SkinTypePage from './pages/SkinTypePage';
 import AnalysisPage from './pages/AnalysisPage';
 import ResultPage from './pages/ResultPage';
+import AcneRiskPage from './pages/AcneRiskPage';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path="/skin-type" element={<SkinTypePage />} />
             <Route path="/analyze" element={<AnalysisPage />} />
             <Route path="/result" element={<ResultPage />} />
+            <Route path="/acne-risk" element={<AcneRiskPage />} />
           </Routes>
         </div>
       </Router>

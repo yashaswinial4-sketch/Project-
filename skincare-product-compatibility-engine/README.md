@@ -1,173 +1,80 @@
 # 🧴 AI Personalized Skincare Advisor
 
-> A complete MERN stack application that prevents harmful skincare product combinations and detects your skin type through smart analysis.
+> A complete MERN stack application with **three powerful features**: ingredient conflict detection, skin type identification, and acne risk prediction.
 
 ---
 
 ## 📋 Project Overview
 
-This project implements **two major tasks**:
-
 | Task | Feature | Description |
 |------|---------|-------------|
-| **Task 1** | 🛡️ Ingredient Conflict Detection | Prevents harmful product combinations, validates products by skin type, suggests safer alternatives |
-| **Task 2** | 🎯 Skin Type Detection System | Detects skin type via 8-question quiz or photo analysis, auto-integrates with Task 1 |
-
----
-
-## 🏗️ Folder Structure
-
-```
-project-root/
-├── src/                          # Frontend (React + TypeScript)
-│   ├── components/
-│   │   ├── SkinForm.tsx          # Skin type selector + concerns picker
-│   │   ├── ProductInputList.tsx  # Dynamic product entry form
-│   │   ├── ResultDisplay.tsx     # Analysis results visualization
-│   │   ├── SkinQuiz.tsx          # 8-question skin type quiz (Task 2)
-│   │   ├── ImageUpload.tsx       # Photo upload + canvas analysis (Task 2)
-│   │   └── SkinResultCard.tsx    # Skin type result display (Task 2)
-│   ├── pages/
-│   │   ├── HomePage.tsx          # Landing page with feature highlights
-│   │   ├── SkinTypePage.tsx      # Skin type detection page (Task 2)
-│   │   ├── AnalysisPage.tsx      # Product analysis form (Task 1)
-│   │   └── ResultPage.tsx        # Analysis results page
-│   ├── logic/
-│   │   ├── skincareRules.ts      # Client-side conflict detection engine
-│   │   └── skinTypeDetector.ts   # Client-side quiz scoring engine
-│   ├── context/
-│   │   └── SkinContext.tsx       # Global state for detected skin type
-│   ├── api.ts                    # API layer with backend fallback
-│   ├── types.ts                  # TypeScript interfaces
-│   ├── App.tsx                   # Router + Provider setup
-│   ├── main.tsx                  # Entry point
-│   └── index.css                 # Custom styles + animations
-├── backend/                      # Backend (Express + MongoDB)
-│   ├── server.js                 # Express server setup
-│   ├── routes/
-│   │   ├── analyze.js            # POST /api/analyze (Task 1)
-│   │   ├── products.js           # GET /api/products
-│   │   └── skinAnalyze.js        # POST /api/analyze-skin (Task 2)
-│   ├── controllers/
-│   │   ├── analyzeController.js  # Routine analysis handler
-│   │   ├── productController.js  # Sample products handler
-│   │   └── skinAnalyzeController.js  # Skin detection handler
-│   ├── logic/
-│   │   ├── skincareRules.js      # Backend rules engine (Task 1 + 2)
-│   │   └── imageAnalysis.js      # Canvas-based image analysis (Task 2)
-│   ├── models/
-│   │   ├── User.js               # User schema
-│   │   ├── Product.js            # Product schema
-│   │   └── Ingredient.js         # Ingredient schema
-│   ├── package.json
-│   └── .env.example
-├── server/                       # Legacy backend (same as backend/)
-├── index.html
-├── package.json
-├── vite.config.ts
-└── README.md
-```
+| **Task 1** | 🛡️ Ingredient Conflict Detection | 14+ conflict rules, skin type compatibility, safe alternatives |
+| **Task 2** | 🎯 Skin Type Detection | 8-question quiz + photo analysis, auto-integration |
+| **Task 3** | 🔴 Acne Risk Prediction | 12+ habit factors, 30+ ingredient checks, personalized tips |
 
 ---
 
 ## 🚀 Quick Start
 
 ### Frontend Only (No Backend Required)
-
-The frontend works **completely standalone** with client-side logic:
-
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
 ```
+The app works fully client-side with fallback logic.
 
-The app will work at `http://localhost:5173` with all features using client-side fallback logic.
-
-### Full Stack (Frontend + Backend)
-
-#### 1. Backend Setup
-
+### Full MERN Stack
 ```bash
+# Terminal 1 — Backend
 cd backend
-
-# Install dependencies
 npm install
-
-# Create environment file
-cp .env.example .env
-
-# Edit .env with your MongoDB URI
-# MONGO_URI=mongodb://localhost:27017/skincare_advisor
-# PORT=5000
-
-# Start backend server
-npm start
-# or for development with auto-restart:
+cp .env.example .env   # Edit with your MongoDB URI
 npm run dev
-```
 
-#### 2. Frontend Setup
-
-```bash
-# From project root
+# Terminal 2 — Frontend
 npm install
-
-# Start frontend (will auto-connect to backend if running)
 npm run dev
 ```
 
 ---
 
-## 🔑 Environment Variables (`.env`)
+## ⚙️ Environment Setup
 
-Create `backend/.env` with:
-
+### Backend `.env` File
 ```env
-# MongoDB Connection
-MONGO_URI=mongodb://localhost:27017/skincare_advisor
-
-# Server Port
 PORT=5000
-
-# Optional: Frontend URL for CORS
-FRONTEND_URL=http://localhost:5173
+MONGO_URI=mongodb://localhost:27017/skincare_advisor
+NODE_ENV=development
 ```
 
-> ⚠️ **IMPORTANT**: The app works WITHOUT MongoDB. If MongoDB is not available, the backend serves sample data and the frontend falls back to client-side logic.
+**⚠️ Important:**
+- If MongoDB is not running, the server still works with in-memory sample data
+- The frontend automatically falls back to client-side logic if the backend is unavailable
+- Set `VITE_API_URL=http://localhost:5000/api` in frontend `.env` if backend runs on a different port
 
 ---
 
-## 📡 API Endpoints
+## 🧩 Task 1: Ingredient Conflict Detection
 
-### Task 1: Ingredient Conflict Detection
+### What It Does
+- Detects **14+ ingredient conflict rules** (Retinol ❌ Vitamin C, Retinol ❌ AHA, etc.)
+- Validates products against **4 skin types** (Dry, Oily, Combination, Sensitive)
+- Detects **overuse of strong actives**
+- Suggests **safer alternatives** for problematic products
+- Generates **personalized ingredient recommendations**
 
-#### `POST /api/analyze`
-Analyzes a skincare routine for conflicts, skin type mismatches, and overuse.
-
+### API Endpoint
+```
+POST /api/analyze
+```
 **Request Body:**
 ```json
 {
   "skinType": "oily",
   "concerns": ["acne", "pigmentation"],
   "products": [
-    {
-      "id": "1",
-      "name": "Retinol Night Cream",
-      "type": "moisturizer",
-      "ingredients": "retinol, ceramides, squalane"
-    },
-    {
-      "id": "2",
-      "name": "Vitamin C Serum",
-      "type": "serum",
-      "ingredients": "vitamin c, hyaluronic acid, vitamin e"
-    }
+    { "name": "Retinol Cream", "type": "serum", "ingredients": "retinol, ceramides, squalane" },
+    { "name": "Vitamin C Serum", "type": "serum", "ingredients": "vitamin c, hyaluronic acid" }
   ]
 }
 ```
@@ -175,39 +82,58 @@ Analyzes a skincare routine for conflicts, skin type mismatches, and overuse.
 **Response:**
 ```json
 {
-  "success": true,
-  "data": {
-    "warnings": [...],
-    "conflicts": [...],
-    "skinTypeIssues": [...],
-    "safeProducts": [...],
-    "unsafeProducts": [...],
-    "suggestions": [...],
-    "recommendations": [...],
-    "overallScore": 70,
-    "summary": "..."
-  }
+  "warnings": [...],
+  "conflicts": [...],
+  "skinTypeIssues": [...],
+  "safeProducts": [...],
+  "unsafeProducts": [...],
+  "suggestions": [...],
+  "recommendations": [...],
+  "overallScore": 65,
+  "summary": "Your routine has some issues..."
 }
 ```
 
-### Task 2: Skin Type Detection
+### Key Files
+| File | Purpose |
+|------|---------|
+| `src/logic/skincareRules.ts` | Client-side rules engine (336 lines) |
+| `backend/logic/skincareRules.js` | Server-side rules engine |
+| `backend/controllers/analyzeController.js` | POST /api/analyze handler |
+| `src/components/ProductInputList.tsx` | Product entry UI |
+| `src/components/ResultDisplay.tsx` | Results visualization |
 
-#### `POST /api/analyze-skin`
-Detects skin type via questionnaire or image.
+---
 
-**Request Body (Questionnaire):**
+## 🧩 Task 2: Skin Type Detection System
+
+### What It Does
+- **8-Question Smart Quiz** with scoring system (Dry, Oily, Combination, Sensitive)
+- **Photo Analysis** using canvas-based pixel heuristics (brightness, redness, saturation)
+- **Auto-integration** — detected skin type flows into AnalysisPage
+- **React Context** for global state management
+- **Session persistence** — survives page refreshes
+
+### Quiz Scoring Logic
+Each answer contributes to Dry/Oily/Combination scores. Sensitive is a flag override.
+```
+Tight skin after washing → +Dry
+Oily shine often → +Oily
+T-zone only → +Combination
+Reacts easily → Sensitive override
+```
+
+### API Endpoint
+```
+POST /api/analyze-skin
+```
+**Request Body (Quiz):**
 ```json
 {
   "method": "questionnaire",
   "answers": [
     { "questionId": 1, "answer": "tight" },
-    { "questionId": 2, "answer": "rarely" },
-    { "questionId": 3, "answer": "never" },
-    { "questionId": 4, "answer": "no" },
-    { "questionId": 5, "answer": "yes" },
-    { "questionId": 6, "answer": "tight-dry" },
-    { "questionId": 7, "answer": "dull-flat" },
-    { "questionId": 8, "answer": "often" }
+    { "questionId": 2, "answer": "often" }
   ]
 }
 ```
@@ -216,120 +142,234 @@ Detects skin type via questionnaire or image.
 ```json
 {
   "method": "image",
-  "image": "data:image/jpeg;base64,..."
+  "image": "data:image/png;base64,..."
 }
 ```
 
 **Response:**
 ```json
 {
-  "success": true,
-  "data": {
-    "skinType": "dry",
-    "confidence": 0.88,
-    "method": "questionnaire",
-    "breakdown": { "dry": 15, "oily": 2, "combination": 1, "sensitive": 5, "normal": 3 },
-    "explanation": "Based on your answers, you have DRY skin..."
-  }
+  "skinType": "oily",
+  "confidence": 0.85,
+  "method": "questionnaire",
+  "explanation": "Your answers strongly indicate oily skin...",
+  "breakdown": { "dry": 10, "oily": 80, "combination": 10 }
 }
 ```
 
-### Other Endpoints
-
-- `GET /api/products` — Returns 12 sample skincare products
-- `GET /api/health` — Health check with feature list
-
----
-
-## 🧠 How the Logic Works
-
-### Task 1: Conflict Detection Engine
-
-1. **Skin Type Compatibility** — Each skin type (dry/oily/combination/sensitive) has lists of ingredients to avoid and prefer
-2. **Ingredient Conflicts** — 14 conflict rules detect dangerous combinations (e.g., Retinol ❌ Vitamin C)
-3. **Allergy/Sensitivity Filter** — Sensitive skin blocks fragrance, alcohol, and strong actives
-4. **Overuse Detection** — Warns when 2+ or 3+ strong actives are used together
-5. **Safety Score** — 0-100 score based on conflicts, mismatches, and overuse
-6. **Alternative Suggestions** — Recommends safer replacement products
-
-### Task 2: Skin Type Detection
-
-#### Questionnaire Method:
-- **8 targeted questions** covering post-wash feel, oiliness, acne, pores, sensitivity, midday oil, end-of-day look, and flakiness
-- **Scoring system** with weighted points for dry, oily, combination, normal, and sensitive
-- **Sensitive override** — If user reports easy reactions, skin type is set to "sensitive" regardless of other scores
-- **Confidence calculation** based on score distribution
-
-#### Image Method:
-- **Canvas-based pixel analysis** — Analyzes brightness, redness, and saturation
-- **Heuristic scoring** — High brightness + low saturation → oily; High redness → sensitive
-- **Fallback** — Returns mock result if canvas analysis fails
+### Key Files
+| File | Purpose |
+|------|---------|
+| `src/logic/skinTypeDetector.ts` | Quiz scoring algorithm |
+| `backend/logic/imageAnalysis.js` | Image heuristic analysis |
+| `src/components/SkinQuiz.tsx` | Quiz UI with progress bar |
+| `src/components/ImageUpload.tsx` | Drag-and-drop image upload |
+| `src/components/SkinResultCard.tsx` | Detection result display |
+| `src/pages/SkinTypePage.tsx` | Main detection page |
+| `src/context/SkinContext.tsx` | Global state management |
 
 ---
 
-## 🔄 User Flow
+## 🧩 Task 3: Acne Risk Prediction
+
+### What It Does
+- Analyzes **12+ daily habit factors** (sleep, water, diet, stress, hygiene, etc.)
+- Scans products against **30+ comedogenic ingredients** with severity ratings
+- Detects **routine gaps** (missing cleanser, moisturizer, sunscreen)
+- Calculates **weighted risk score** (0-100) across 4 dimensions
+- Generates **personalized prevention tips** prioritized by severity
+- Suggests **specific routine changes**
+
+### Scoring Breakdown
+| Factor | Weight | What It Measures |
+|--------|--------|-----------------|
+| Lifestyle Habits | 35% | Sleep, water, diet, stress, exercise |
+| Product Ingredients | 30% | Comedogenic ratings, acne triggers |
+| Routine Gaps | 25% | Missing steps, over-exfoliation |
+| Skin Type | 10% | Natural acne predisposition |
+
+### Risk Levels
+| Score | Level | Color |
+|-------|-------|-------|
+| 0-29 | 🟢 Low | Green |
+| 30-49 | 🟡 Moderate | Yellow |
+| 50-69 | 🟠 High | Orange |
+| 70-100 | 🔴 Severe | Red |
+
+### Habit Factors Analyzed
+1. Current acne severity
+2. Current breakout count
+3. Sleep hours per night
+4. Water intake (glasses/day)
+5. Diet type (sugar, dairy, junk food)
+6. Stress level
+7. Exercise frequency
+8. Face wash frequency
+9. Makeup removal consistency
+10. Pillowcase change frequency
+11. Sunscreen usage
+12. Face touching frequency
+
+### Comedogenic Ingredient Database
+Includes 30+ ingredients with ratings 1-5:
+- **Rating 5 (Extreme):** isopropyl myristate, myristyl myristate, wheat germ oil
+- **Rating 4 (High):** coconut oil, cocoa butter, butyl stearate, laureth-4
+- **Rating 3 (Medium):** sodium lauryl sulfate, alcohol, oleic acid
+- **Rating 2 (Low):** lanolin, mineral oil, fragrance, dimethicone
+- **Rating 1 (Minimal):** petroleum, petrolatum
+
+### API Endpoint
+```
+POST /api/acne-risk
+```
+**Request Body:**
+```json
+{
+  "habits": {
+    "currentAcne": "moderate",
+    "sleepHours": 5,
+    "waterIntake": 3,
+    "dietType": "high-sugar",
+    "stressLevel": "high",
+    "exerciseFrequency": "none",
+    "faceWashFrequency": "once",
+    "makeupRemoval": "sometimes",
+    "pillowcaseChange": "monthly",
+    "sunscreenUse": "never",
+    "touchingFace": "often",
+    "currentBreakouts": "moderate"
+  },
+  "products": [
+    { "name": "Heavy Cream", "type": "moisturizer", "ingredients": "coconut oil, cocoa butter, fragrance" }
+  ],
+  "skinType": "oily"
+}
+```
+
+**Response:**
+```json
+{
+  "riskLevel": "severe",
+  "riskScore": 78,
+  "breakdown": {
+    "habitScore": 85,
+    "ingredientScore": 60,
+    "routineScore": 45,
+    "skinTypeScore": 15
+  },
+  "triggers": [...],
+  "safeProducts": [],
+  "riskyProducts": [{ "name": "Heavy Cream", "triggers": ["coconut oil (rating: 4/5)"] }],
+  "tips": [...],
+  "summary": "🔴 Your acne risk is SEVERE...",
+  "routineChanges": [...]
+}
+```
+
+### Key Files
+| File | Purpose |
+|------|---------|
+| `src/logic/acneRiskPredictor.ts` | Client-side prediction engine (400+ lines) |
+| `backend/logic/acneRiskPredictor.js` | Server-side prediction engine |
+| `src/components/AcneHabitForm.tsx` | 12-factor habit questionnaire |
+| `src/components/AcneProductReview.tsx` | Product acne trigger scanner |
+| `src/components/AcneRiskResult.tsx` | Risk visualization with score circle |
+| `src/pages/AcneRiskPage.tsx` | 3-step assessment flow |
+| `backend/routes/acneRisk.js` | POST /api/acne-risk route |
+
+---
+
+## 🗂️ Complete Folder Structure
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    HOME PAGE                         │
-│  ┌─────────────────┐  ┌──────────────────────────┐  │
-│  │  Analyze Routine │  │  Detect Skin Type (NEW)  │  │
-│  │   (Task 1)       │  │  (Task 2)                │  │
-│  └─────────────────┘  └──────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-         │                              │
-         ▼                              ▼
-┌─────────────────┐        ┌──────────────────────────┐
-│  ANALYSIS PAGE  │        │   SKIN TYPE PAGE          │
-│  - Manual input │        │  ┌────────┐ ┌──────────┐ │
-│  - OR auto-fill │        │  │  Quiz  │ │  Photo   │ │
-│    from Task 2  │        │  │ (8 Qs) │ │  Upload  │ │
-└─────────────────┘        │  └────────┘ └──────────┘ │
-         │                 └──────────────────────────┘
-         ▼                              │
-┌─────────────────┐                     │
-│  RESULT PAGE    │◄────────────────────┘
-│  - Score circle │  (auto-fills skin type)
-│  - Conflicts    │
-│  - Alternatives │
-│  - Tips         │
-└─────────────────┘
+├── src/                          # Frontend (React + TypeScript)
+│   ├── components/
+│   │   ├── SkinForm.tsx          # Task 1: Skin type + concerns form
+│   │   ├── ProductInputList.tsx  # Task 1: Product entry
+│   │   ├── ResultDisplay.tsx     # Task 1: Results visualization
+│   │   ├── SkinQuiz.tsx          # Task 2: 8-question quiz
+│   │   ├── ImageUpload.tsx       # Task 2: Photo upload + analysis
+│   │   ├── SkinResultCard.tsx    # Task 2: Detection result
+│   │   ├── AcneHabitForm.tsx     # Task 3: Habit questionnaire
+│   │   ├── AcneProductReview.tsx # Task 3: Product acne scanner
+│   │   └── AcneRiskResult.tsx    # Task 3: Risk visualization
+│   ├── pages/
+│   │   ├── HomePage.tsx          # Landing page with 3 CTAs
+│   │   ├── SkinTypePage.tsx      # Task 2: Detection page
+│   │   ├── AnalysisPage.tsx      # Task 1: Product analysis
+│   │   ├── ResultPage.tsx        # Task 1: Results page
+│   │   └── AcneRiskPage.tsx      # Task 3: Acne risk page
+│   ├── logic/
+│   │   ├── skincareRules.ts      # Task 1: Rules engine
+│   │   ├── skinTypeDetector.ts   # Task 2: Quiz scoring
+│   │   └── acneRiskPredictor.ts  # Task 3: Risk prediction
+│   ├── context/
+│   │   └── SkinContext.tsx       # Global skin type state
+│   ├── api.ts                    # API layer with fallback
+│   ├── types.ts                  # All TypeScript interfaces
+│   ├── App.tsx                   # Router + providers
+│   ├── main.tsx                  # Entry point
+│   └── index.css                 # Custom animations
+├── backend/                      # Backend (Express + MongoDB)
+│   ├── logic/
+│   │   ├── skincareRules.js      # Task 1: Server rules
+│   │   ├── imageAnalysis.js      # Task 2: Image analysis
+│   │   └── acneRiskPredictor.js  # Task 3: Server prediction
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   └── Ingredient.js
+│   ├── controllers/
+│   │   ├── analyzeController.js
+│   │   └── productController.js
+│   ├── routes/
+│   │   ├── analyze.js            # Task 1 route
+│   │   ├── products.js           # Sample products route
+│   │   ├── skinAnalyze.js        # Task 2 route
+│   │   └── acneRisk.js           # Task 3 route
+│   ├── server.js                 # Express server
+│   ├── package.json
+│   └── .env.example
+├── index.html
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── README.md
 ```
-
----
-
-## 🎨 UI Color System
-
-| Color | Meaning | Usage |
-|-------|---------|-------|
-| 🟢 Green/Emerald | Safe | Safe products, high scores, positive actions |
-| 🟡 Amber/Yellow | Warning | Skin mismatches, moderate conflicts |
-| 🔴 Red | Danger | Ingredient conflicts, unsafe products |
-| 🟣 Violet/Purple | Detection | Skin type detection features |
-| 🔵 Blue | Info | Alternatives, suggestions |
 
 ---
 
 ## 🧪 Test Scenarios
 
-### Task 1 Test Cases
+### Task 1: Conflict Detection
+1. Add "Retinol Night Cream" + "Vitamin C Serum" → Should detect Retinol ❌ Vitamin C conflict
+2. Set skin type to "Sensitive" + add product with "Fragrance" → Should flag skin mismatch
+3. Add 3+ products with strong actives → Should trigger overuse warning
 
-| Scenario | Products | Expected Result |
-|----------|----------|----------------|
-| Retinol + Vitamin C | Retinol Cream + Vitamin C Serum | ❌ High severity conflict |
-| Retinol + AHA | Retinol Cream + Glycolic Toner | ❌ High severity conflict |
-| Sensitive + Fragrance | Fragrance product + Sensitive skin | ⚠️ Skin mismatch |
-| 3+ Strong Actives | Retinol + Salicylic + Benzoyl | ⚠️ Overuse warning |
-| Safe Routine | Gentle Cleanser + HA Moisturizer + SPF | ✅ Score 100 |
+### Task 2: Skin Type Detection
+1. Quiz: Tight skin + No shine + No acne → Should detect **Dry**
+2. Quiz: Oily + Acne + Visible pores → Should detect **Oily**
+3. Quiz: Mixed answers → Should detect **Combination**
+4. Quiz: Reacts easily → Should override to **Sensitive**
 
-### Task 2 Test Cases
+### Task 3: Acne Risk Prediction
+1. **Low Risk:** Good sleep (8h), 8+ water, healthy diet, low stress, good hygiene → Score < 30
+2. **Moderate Risk:** 6h sleep, 5 water, balanced diet, moderate stress → Score 30-49
+3. **High Risk:** 5h sleep, 3 water, high sugar, high stress, rarely wash face → Score 50-69
+4. **Severe Risk:** 4h sleep, 2 water, junk food, extreme stress, never remove makeup + coconut oil products → Score 70+
 
-| Scenario | Quiz Answers | Expected Result |
-|----------|-------------|-----------------|
-| Dry Skin | Tight + rarely shiny + never acne + no pores + no reaction + tight-dry + dull + often flaky | 🏜️ Dry |
-| Oily Skin | Oily + often shiny + frequent acne + visible pores + no reaction + oily-all-over + very-shiny + never flaky | 💧 Oily |
-| Combination | Normal + sometimes shiny + sometimes acne + T-zone pores + no reaction + oily-tzone + mixed + sometimes flaky | ⚖️ Combination |
-| Sensitive | Any + yes to reaction | 🌸 Sensitive (override) |
+---
+
+## 🎨 UI Design System
+
+| Element | Color | Usage |
+|---------|-------|-------|
+| Primary | Emerald/Teal | Task 1, main brand |
+| Secondary | Violet/Purple | Task 2, skin detection |
+| Accent | Rose/Pink | Task 3, acne risk |
+| Danger | Red | Conflicts, severe risk |
+| Warning | Amber | Cautions, moderate risk |
+| Success | Green | Safe products, low risk |
 
 ---
 
@@ -340,41 +380,37 @@ Detects skin type via questionnaire or image.
 - React Router DOM
 - Tailwind CSS
 - Lucide React (icons)
+- Axios
 
 ### Backend
 - Express.js
 - MongoDB + Mongoose
 - CORS
 - dotenv
+- Nodemon (dev)
 
 ---
 
-## ⚠️ Important Notes
+## 🔧 Troubleshooting
 
-1. **No ML/AI Required** — All logic is rule-based. The image analysis uses canvas pixel heuristics, not machine learning.
-2. **Works Offline** — Frontend has complete fallback logic. No backend needed for full functionality.
-3. **Session Storage** — Detected skin type persists via sessionStorage across page navigations.
-4. **Backend Optional** — If backend is not running, all features work client-side.
-5. **MongoDB Optional** — Server runs with sample data even without MongoDB connection.
+### Frontend builds but backend fails
+- The app works fully client-side. Backend is optional.
 
----
+### MongoDB connection fails
+- Server runs with in-memory sample data. No data loss.
 
-## 🛠️ Tech Stack
+### Port 5000 already in use
+- Change `PORT` in `backend/.env` and update `VITE_API_URL` in frontend.
 
-```
-Frontend:  React + TypeScript + Tailwind CSS + Vite
-Backend:   Express.js + MongoDB + Mongoose
-State:     React Context API
-Routing:   React Router DOM
-Icons:     Lucide React
-```
+### Quiz doesn't detect skin type correctly
+- Ensure you answer all 8 questions. The scoring system needs complete data.
+
+### Acne risk seems too high/low
+- The scoring is weighted: habits (35%), products (30%), routine (25%), skin type (10%).
+- Check each breakdown section in the results for specific factors.
 
 ---
 
 ## 📝 License
 
-Built as a MERN stack project for AI Personalized Skincare Advisor.
-
----
-
-> **Built with ❤️ using the MERN Stack**
+Built for educational purposes — AI Personalized Skincare Advisor (MERN Stack)

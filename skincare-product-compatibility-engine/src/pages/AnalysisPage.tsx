@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { SkinType, SkinConcern, Product } from '../types';
+import { useSkinContext } from '../context/SkinContext';
 import { validateInput } from '../logic/skincareRules';
 import { analyzeRoutine } from '../api';
 import SkinForm from '../components/SkinForm';
 import ProductInputList from '../components/ProductInputList';
-import { ArrowLeft, ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2, Sparkles, Target, X } from 'lucide-react';
 
 const AnalysisPage: React.FC = () => {
   const navigate = useNavigate();
+  const { detectedSkinType, detectionMethod, detectionConfidence, clearDetection } = useSkinContext();
+
   const [step, setStep] = useState(1);
   const [skinType, setSkinType] = useState<SkinType | ''>('');
   const [concerns, setConcerns] = useState<SkinConcern[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+
+  // Auto-fill detected skin type from context
+  useEffect(() => {
+    if (detectedSkinType) {
+      setSkinType(detectedSkinType);
+    }
+  }, [detectedSkinType]);
 
   const handleNext = () => {
     if (step === 1) {
@@ -53,17 +63,23 @@ const AnalysisPage: React.FC = () => {
         products
       });
 
-      // Store result in sessionStorage for the result page
       sessionStorage.setItem('analysisResult', JSON.stringify(result));
       sessionStorage.setItem('skinType', skinType as string);
 
       navigate('/result');
-    } catch (err) {
+    } catch {
       setErrors(['An error occurred during analysis. Please try again.']);
     } finally {
       setLoading(false);
     }
   };
+
+  const handleClearDetection = () => {
+    clearDetection();
+    setSkinType('');
+  };
+
+  const detectedMethodLabel = detectionMethod === 'questionnaire' ? 'quiz' : 'photo analysis';
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8 md:py-12">
@@ -76,6 +92,61 @@ const AnalysisPage: React.FC = () => {
           <ArrowLeft size={20} />
           Back to Home
         </button>
+
+        {/* Detected Skin Type Banner */}
+        {detectedSkinType && (
+          <div className="mb-6 bg-gradient-to-r from-violet-50 to-purple-50 border-2 border-violet-200 rounded-2xl p-5 animate-fade-in">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-violet-100 rounded-full flex items-center justify-center shrink-0">
+                  <Target size={20} className="text-violet-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-violet-800 mb-1">
+                    Skin Type Detected: <span className="capitalize">{detectedSkinType}</span>
+                  </h4>
+                  <p className="text-sm text-violet-600">
+                    Detected via {detectedMethodLabel} with {Math.round(detectionConfidence * 100)}% confidence.
+                    Auto-filled below — you can change it if needed.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleClearDetection}
+                className="text-violet-400 hover:text-violet-600 transition-colors p-1 shrink-0"
+                title="Clear detected skin type"
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Detect Skin Type CTA (if not detected) */}
+        {!detectedSkinType && (
+          <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl p-5 animate-fade-in">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
+                  <Target size={20} className="text-emerald-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-emerald-800">Don't know your skin type?</h4>
+                  <p className="text-sm text-emerald-600">
+                    Take our smart quiz or upload a photo to detect it automatically.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate('/skin-type')}
+                className="flex items-center gap-2 px-5 py-2.5 bg-violet-600 text-white rounded-xl font-semibold hover:bg-violet-700 transition-colors shrink-0"
+              >
+                <Target size={18} />
+                Detect Now
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Progress Bar */}
         <div className="mb-10">

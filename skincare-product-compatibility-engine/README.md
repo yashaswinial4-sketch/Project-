@@ -1,179 +1,172 @@
-# 🧠 AI Personalized Skincare Advisor
+# 🧴 AI Personalized Skincare Advisor
 
-> **Task 1**: Prevent harmful skincare product combinations using rule-based ingredient conflict detection.
+> A complete MERN stack application that prevents harmful skincare product combinations and detects your skin type through smart analysis.
 
 ---
 
 ## 📋 Project Overview
 
-A full-stack **MERN** application that analyzes users' skincare routines to detect:
+This project implements **two major tasks**:
 
-- ❌ **Ingredient conflicts** (e.g., Retinol + Vitamin C)
-- ⚠️ **Skin type mismatches** (e.g., Alcohol on sensitive skin)
-- 🔥 **Overuse of strong actives** (e.g., 3+ strong ingredients)
-- ✅ **Safe product recommendations** and alternatives
-
-### 🚀 Live Demo
-The frontend runs standalone with client-side analysis logic. The backend API is included for full MERN deployment.
+| Task | Feature | Description |
+|------|---------|-------------|
+| **Task 1** | 🛡️ Ingredient Conflict Detection | Prevents harmful product combinations, validates products by skin type, suggests safer alternatives |
+| **Task 2** | 🎯 Skin Type Detection System | Detects skin type via 8-question quiz or photo analysis, auto-integrates with Task 1 |
 
 ---
 
 ## 🏗️ Folder Structure
 
 ```
-├── client/                          # React Frontend (Vite)
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── SkinForm.tsx         # Skin type & concerns form
-│   │   │   ├── ProductInputList.tsx # Product entry with ingredient hints
-│   │   │   └── ResultDisplay.tsx    # Analysis results visualization
-│   │   ├── pages/
-│   │   │   ├── HomePage.tsx         # Landing page
-│   │   │   ├── AnalysisPage.tsx     # Multi-step analysis form
-│   │   │   └── ResultPage.tsx       # Results display
-│   │   ├── logic/
-│   │   │   └── skincareRules.ts     # Client-side rules engine
-│   │   ├── api.ts                   # API layer (with fallback)
-│   │   ├── types.ts                 # TypeScript types
-│   │   ├── App.tsx                  # Router setup
-│   │   └── main.tsx                 # Entry point
-│   ├── index.html
-│   └── package.json
-│
-├── server/                          # Express Backend
+project-root/
+├── src/                          # Frontend (React + TypeScript)
+│   ├── components/
+│   │   ├── SkinForm.tsx          # Skin type selector + concerns picker
+│   │   ├── ProductInputList.tsx  # Dynamic product entry form
+│   │   ├── ResultDisplay.tsx     # Analysis results visualization
+│   │   ├── SkinQuiz.tsx          # 8-question skin type quiz (Task 2)
+│   │   ├── ImageUpload.tsx       # Photo upload + canvas analysis (Task 2)
+│   │   └── SkinResultCard.tsx    # Skin type result display (Task 2)
+│   ├── pages/
+│   │   ├── HomePage.tsx          # Landing page with feature highlights
+│   │   ├── SkinTypePage.tsx      # Skin type detection page (Task 2)
+│   │   ├── AnalysisPage.tsx      # Product analysis form (Task 1)
+│   │   └── ResultPage.tsx        # Analysis results page
 │   ├── logic/
-│   │   └── skincareRules.js         # Core rules engine (14+ conflict rules)
-│   ├── models/
-│   │   ├── Product.js               # Product schema
-│   │   ├── Ingredient.js            # Ingredient schema
-│   │   └── User.js                  # User schema
-│   ├── controllers/
-│   │   ├── analyzeController.js     # Analysis endpoint logic
-│   │   └── productController.js     # Products endpoint logic
+│   │   ├── skincareRules.ts      # Client-side conflict detection engine
+│   │   └── skinTypeDetector.ts   # Client-side quiz scoring engine
+│   ├── context/
+│   │   └── SkinContext.tsx       # Global state for detected skin type
+│   ├── api.ts                    # API layer with backend fallback
+│   ├── types.ts                  # TypeScript interfaces
+│   ├── App.tsx                   # Router + Provider setup
+│   ├── main.tsx                  # Entry point
+│   └── index.css                 # Custom styles + animations
+├── backend/                      # Backend (Express + MongoDB)
+│   ├── server.js                 # Express server setup
 │   ├── routes/
-│   │   ├── analyze.js               # POST /api/analyze
-│   │   └── products.js              # GET /api/products
-│   ├── server.js                    # Express server entry
+│   │   ├── analyze.js            # POST /api/analyze (Task 1)
+│   │   ├── products.js           # GET /api/products
+│   │   └── skinAnalyze.js        # POST /api/analyze-skin (Task 2)
+│   ├── controllers/
+│   │   ├── analyzeController.js  # Routine analysis handler
+│   │   ├── productController.js  # Sample products handler
+│   │   └── skinAnalyzeController.js  # Skin detection handler
+│   ├── logic/
+│   │   ├── skincareRules.js      # Backend rules engine (Task 1 + 2)
+│   │   └── imageAnalysis.js      # Canvas-based image analysis (Task 2)
+│   ├── models/
+│   │   ├── User.js               # User schema
+│   │   ├── Product.js            # Product schema
+│   │   └── Ingredient.js         # Ingredient schema
 │   ├── package.json
 │   └── .env.example
-│
+├── server/                       # Legacy backend (same as backend/)
+├── index.html
+├── package.json
+├── vite.config.ts
 └── README.md
 ```
 
 ---
 
-## 🔧 Tech Stack
+## 🚀 Quick Start
 
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | React 19, TypeScript, Vite, Tailwind CSS 4 |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB, Mongoose |
-| **Routing** | React Router DOM v7 |
-| **Icons** | Lucide React |
-| **HTTP** | Fetch API (with Axios alternative in backend) |
+### Frontend Only (No Backend Required)
 
----
-
-## 🚀 How to Run
-
-### Option A: Frontend Only (Quick Start)
+The frontend works **completely standalone** with client-side logic:
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development server
+# Run development server
 npm run dev
 
 # Build for production
 npm run build
 ```
 
-The frontend works **standalone** with client-side analysis logic. No backend required for demo.
+The app will work at `http://localhost:5173` with all features using client-side fallback logic.
 
----
+### Full Stack (Frontend + Backend)
 
-### Option B: Full MERN Stack (Production)
-
-#### 1. Setup MongoDB
+#### 1. Backend Setup
 
 ```bash
-# Install MongoDB locally (Ubuntu)
-sudo apt update
-sudo apt install mongodb
-sudo systemctl start mongodb
-
-# OR use MongoDB Atlas (cloud)
-# Get connection string from: https://cloud.mongodb.com
-```
-
-#### 2. Setup Backend Server
-
-```bash
-cd server
+cd backend
 
 # Install dependencies
 npm install
 
-# Create .env file
+# Create environment file
 cp .env.example .env
 
 # Edit .env with your MongoDB URI
-nano .env
-```
+# MONGO_URI=mongodb://localhost:27017/skincare_advisor
+# PORT=5000
 
-**`.env` Configuration:**
-```env
-MONGO_URI=mongodb://localhost:27017/skincare_advisor
-# OR for MongoDB Atlas:
-# MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/skincare_advisor
-PORT=5000
-NODE_ENV=development
-```
-
-```bash
-# Start server
+# Start backend server
+npm start
+# or for development with auto-restart:
 npm run dev
-# Server runs on http://localhost:5000
 ```
 
-#### 3. Setup Frontend
+#### 2. Frontend Setup
 
 ```bash
-# In project root
+# From project root
 npm install
 
-# Create .env for frontend (optional)
-echo "VITE_API_URL=http://localhost:5000/api" > .env
-
-# Start frontend
+# Start frontend (will auto-connect to backend if running)
 npm run dev
-# Frontend runs on http://localhost:5173
 ```
+
+---
+
+## 🔑 Environment Variables (`.env`)
+
+Create `backend/.env` with:
+
+```env
+# MongoDB Connection
+MONGO_URI=mongodb://localhost:27017/skincare_advisor
+
+# Server Port
+PORT=5000
+
+# Optional: Frontend URL for CORS
+FRONTEND_URL=http://localhost:5173
+```
+
+> ⚠️ **IMPORTANT**: The app works WITHOUT MongoDB. If MongoDB is not available, the backend serves sample data and the frontend falls back to client-side logic.
 
 ---
 
 ## 📡 API Endpoints
 
-### `POST /api/analyze`
-Analyzes a skincare routine for conflicts and mismatches.
+### Task 1: Ingredient Conflict Detection
+
+#### `POST /api/analyze`
+Analyzes a skincare routine for conflicts, skin type mismatches, and overuse.
 
 **Request Body:**
 ```json
 {
-  "skinType": "sensitive",
+  "skinType": "oily",
   "concerns": ["acne", "pigmentation"],
   "products": [
     {
-      "name": "Retinol Cream",
+      "id": "1",
+      "name": "Retinol Night Cream",
       "type": "moisturizer",
-      "ingredients": "retinol, ceramides, fragrance"
+      "ingredients": "retinol, ceramides, squalane"
     },
     {
+      "id": "2",
       "name": "Vitamin C Serum",
       "type": "serum",
-      "ingredients": "vitamin c, hyaluronic acid"
+      "ingredients": "vitamin c, hyaluronic acid, vitamin e"
     }
   ]
 }
@@ -191,163 +184,197 @@ Analyzes a skincare routine for conflicts and mismatches.
     "unsafeProducts": [...],
     "suggestions": [...],
     "recommendations": [...],
-    "overallScore": 45,
-    "summary": "❌ Your routine has significant issues..."
+    "overallScore": 70,
+    "summary": "..."
   }
 }
 ```
 
-### `GET /api/products`
-Returns sample/reference products.
+### Task 2: Skin Type Detection
 
-### `GET /api/health`
-Health check endpoint.
+#### `POST /api/analyze-skin`
+Detects skin type via questionnaire or image.
 
----
+**Request Body (Questionnaire):**
+```json
+{
+  "method": "questionnaire",
+  "answers": [
+    { "questionId": 1, "answer": "tight" },
+    { "questionId": 2, "answer": "rarely" },
+    { "questionId": 3, "answer": "never" },
+    { "questionId": 4, "answer": "no" },
+    { "questionId": 5, "answer": "yes" },
+    { "questionId": 6, "answer": "tight-dry" },
+    { "questionId": 7, "answer": "dull-flat" },
+    { "questionId": 8, "answer": "often" }
+  ]
+}
+```
 
-## 🧠 Rules Engine Details
+**Request Body (Image):**
+```json
+{
+  "method": "image",
+  "image": "data:image/jpeg;base64,..."
+}
+```
 
-### Ingredient Conflicts (14 Rules)
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "skinType": "dry",
+    "confidence": 0.88,
+    "method": "questionnaire",
+    "breakdown": { "dry": 15, "oily": 2, "combination": 1, "sensitive": 5, "normal": 3 },
+    "explanation": "Based on your answers, you have DRY skin..."
+  }
+}
+```
 
-| Conflict | Severity | Reason |
-|----------|----------|--------|
-| Retinol ❌ Vitamin C | HIGH | Irritation + reduced effectiveness |
-| Retinol ❌ Glycolic Acid | HIGH | Excessive exfoliation |
-| Retinol ❌ Salicylic Acid | HIGH | Over-drying |
-| Retinol ❌ Benzoyl Peroxide | HIGH | Deactivates retinol |
-| Salicylic Acid ❌ Benzoyl Peroxide | MEDIUM | Over-drying |
-| Glycolic Acid ❌ Salicylic Acid | MEDIUM | Barrier damage |
-| AHA ❌ BHA | MEDIUM | Over-exfoliation |
-| Vitamin C ❌ Niacinamide | LOW | Possible flushing |
+### Other Endpoints
 
-### Skin Type Rules
-
-| Skin Type | Avoid | Prefer |
-|-----------|-------|--------|
-| **Dry** | Alcohol, Salicylic Acid, Clay | Hyaluronic Acid, Ceramides, Squalane |
-| **Oily** | Mineral Oil, Coconut Oil, Heavy Oils | Salicylic Acid, Niacinamide, Clay |
-| **Combination** | Heavy Oils, Alcohol Denat | Niacinamide, Hyaluronic Acid |
-| **Sensitive** | Fragrance, Retinol, AHAs, BHAs | Aloe Vera, Centella, Ceramides |
-
-### Overuse Detection
-- **3+ strong actives** → HIGH warning
-- **2 strong actives** → MEDIUM warning
-
----
-
-## 🎨 UI Features
-
-- **Multi-step form** with progress bar
-- **Ingredient hint system** — click to add common ingredients
-- **Color-coded results**:
-  - 🔴 Red = Harmful conflicts
-  - 🟡 Yellow = Warnings / mismatches
-  - 🟢 Green = Safe products
-  - 🔵 Blue = Alternatives
-  - 🟣 Purple = Recommendations
-- **Circular safety score** (0-100)
-- **Responsive design** — works on mobile, tablet, desktop
+- `GET /api/products` — Returns 12 sample skincare products
+- `GET /api/health` — Health check with feature list
 
 ---
 
-## 🔒 Environment Variables
+## 🧠 How the Logic Works
 
-### Backend (`server/.env`)
+### Task 1: Conflict Detection Engine
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `MONGO_URI` | MongoDB connection string | Yes |
-| `PORT` | Server port (default: 5000) | No |
-| `NODE_ENV` | development/production | No |
+1. **Skin Type Compatibility** — Each skin type (dry/oily/combination/sensitive) has lists of ingredients to avoid and prefer
+2. **Ingredient Conflicts** — 14 conflict rules detect dangerous combinations (e.g., Retinol ❌ Vitamin C)
+3. **Allergy/Sensitivity Filter** — Sensitive skin blocks fragrance, alcohol, and strong actives
+4. **Overuse Detection** — Warns when 2+ or 3+ strong actives are used together
+5. **Safety Score** — 0-100 score based on conflicts, mismatches, and overuse
+6. **Alternative Suggestions** — Recommends safer replacement products
 
-### Frontend (`.env`)
+### Task 2: Skin Type Detection
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `VITE_API_URL` | Backend API URL | No (falls back to client-side) |
+#### Questionnaire Method:
+- **8 targeted questions** covering post-wash feel, oiliness, acne, pores, sensitivity, midday oil, end-of-day look, and flakiness
+- **Scoring system** with weighted points for dry, oily, combination, normal, and sensitive
+- **Sensitive override** — If user reports easy reactions, skin type is set to "sensitive" regardless of other scores
+- **Confidence calculation** based on score distribution
 
----
-
-## 📦 Sample Products Included
-
-1. Salicylic Acid Cleanser
-2. Vitamin C Brightening Serum
-3. Retinol Night Cream
-4. Hyaluronic Acid Moisturizer
-5. Glycolic Acid Toner
-6. Benzoyl Peroxide Gel
-7. Niacinamide Serum
-8. Gentle Foaming Cleanser
-9. SPF 50 Sunscreen
-10. AHA/BHA Exfoliating Toner
-11. Ceramide Repair Cream
-12. Clay Purifying Mask
+#### Image Method:
+- **Canvas-based pixel analysis** — Analyzes brightness, redness, and saturation
+- **Heuristic scoring** — High brightness + low saturation → oily; High redness → sensitive
+- **Fallback** — Returns mock result if canvas analysis fails
 
 ---
 
-## 🧪 Testing Scenarios
+## 🔄 User Flow
 
-### Test Case 1: Sensitive Skin with Conflicts
-- **Skin Type**: Sensitive
-- **Concerns**: Acne, Pigmentation
-- **Products**:
-  - Retinol Night Cream (retinol, ceramides)
-  - Vitamin C Serum (vitamin c, hyaluronic acid)
-  - Glycolic Acid Toner (glycolic acid, aloe vera)
-- **Expected**: Multiple HIGH severity conflicts + skin mismatches
+```
+┌─────────────────────────────────────────────────────┐
+│                    HOME PAGE                         │
+│  ┌─────────────────┐  ┌──────────────────────────┐  │
+│  │  Analyze Routine │  │  Detect Skin Type (NEW)  │  │
+│  │   (Task 1)       │  │  (Task 2)                │  │
+│  └─────────────────┘  └──────────────────────────┘  │
+└─────────────────────────────────────────────────────┘
+         │                              │
+         ▼                              ▼
+┌─────────────────┐        ┌──────────────────────────┐
+│  ANALYSIS PAGE  │        │   SKIN TYPE PAGE          │
+│  - Manual input │        │  ┌────────┐ ┌──────────┐ │
+│  - OR auto-fill │        │  │  Quiz  │ │  Photo   │ │
+│    from Task 2  │        │  │ (8 Qs) │ │  Upload  │ │
+└─────────────────┘        │  └────────┘ └──────────┘ │
+         │                 └──────────────────────────┘
+         ▼                              │
+┌─────────────────┐                     │
+│  RESULT PAGE    │◄────────────────────┘
+│  - Score circle │  (auto-fills skin type)
+│  - Conflicts    │
+│  - Alternatives │
+│  - Tips         │
+└─────────────────┘
+```
 
-### Test Case 2: Oily Skin Safe Routine
-- **Skin Type**: Oily
-- **Concerns**: Acne
-- **Products**:
-  - Salicylic Acid Cleanser
-  - Niacinamide Serum
-  - SPF 50 Sunscreen
-- **Expected**: High score, minimal warnings
+---
 
-### Test Case 3: Overuse Detection
-- **Skin Type**: Combination
-- **Concerns**: Aging, Acne
-- **Products**:
-  - Retinol Cream (retinol)
-  - Glycolic Toner (glycolic acid)
-  - Salicylic Cleanser (salicylic acid)
-  - Benzoyl Peroxide Gel (benzoyl peroxide)
-- **Expected**: Overuse warning + multiple conflicts
+## 🎨 UI Color System
+
+| Color | Meaning | Usage |
+|-------|---------|-------|
+| 🟢 Green/Emerald | Safe | Safe products, high scores, positive actions |
+| 🟡 Amber/Yellow | Warning | Skin mismatches, moderate conflicts |
+| 🔴 Red | Danger | Ingredient conflicts, unsafe products |
+| 🟣 Violet/Purple | Detection | Skin type detection features |
+| 🔵 Blue | Info | Alternatives, suggestions |
+
+---
+
+## 🧪 Test Scenarios
+
+### Task 1 Test Cases
+
+| Scenario | Products | Expected Result |
+|----------|----------|----------------|
+| Retinol + Vitamin C | Retinol Cream + Vitamin C Serum | ❌ High severity conflict |
+| Retinol + AHA | Retinol Cream + Glycolic Toner | ❌ High severity conflict |
+| Sensitive + Fragrance | Fragrance product + Sensitive skin | ⚠️ Skin mismatch |
+| 3+ Strong Actives | Retinol + Salicylic + Benzoyl | ⚠️ Overuse warning |
+| Safe Routine | Gentle Cleanser + HA Moisturizer + SPF | ✅ Score 100 |
+
+### Task 2 Test Cases
+
+| Scenario | Quiz Answers | Expected Result |
+|----------|-------------|-----------------|
+| Dry Skin | Tight + rarely shiny + never acne + no pores + no reaction + tight-dry + dull + often flaky | 🏜️ Dry |
+| Oily Skin | Oily + often shiny + frequent acne + visible pores + no reaction + oily-all-over + very-shiny + never flaky | 💧 Oily |
+| Combination | Normal + sometimes shiny + sometimes acne + T-zone pores + no reaction + oily-tzone + mixed + sometimes flaky | ⚖️ Combination |
+| Sensitive | Any + yes to reaction | 🌸 Sensitive (override) |
+
+---
+
+## 📦 Dependencies
+
+### Frontend
+- React 18 + TypeScript
+- React Router DOM
+- Tailwind CSS
+- Lucide React (icons)
+
+### Backend
+- Express.js
+- MongoDB + Mongoose
+- CORS
+- dotenv
 
 ---
 
 ## ⚠️ Important Notes
 
-1. **No ML/AI**: This is purely rule-based logic. No image analysis or machine learning.
-2. **Client-side fallback**: The frontend works without the backend by using the embedded rules engine.
-3. **MongoDB optional**: The server gracefully falls back to sample data if MongoDB is unavailable.
-4. **Not medical advice**: This tool is for educational purposes only. Consult a dermatologist for medical advice.
+1. **No ML/AI Required** — All logic is rule-based. The image analysis uses canvas pixel heuristics, not machine learning.
+2. **Works Offline** — Frontend has complete fallback logic. No backend needed for full functionality.
+3. **Session Storage** — Detected skin type persists via sessionStorage across page navigations.
+4. **Backend Optional** — If backend is not running, all features work client-side.
+5. **MongoDB Optional** — Server runs with sample data even without MongoDB connection.
 
 ---
 
-## 🛠️ Future Enhancements (Tasks 2+)
+## 🛠️ Tech Stack
 
-- [ ] Image-based skin analysis (ML/CV)
-- [ ] User accounts & authentication
-- [ ] Routine tracking over time
-- [ ] Product database with barcode scanning
-- [ ] Dermatologist consultation booking
-- [ ] Push notifications for routine reminders
-
----
-
-## 📄 License
-
-MIT License — Built for educational purposes.
+```
+Frontend:  React + TypeScript + Tailwind CSS + Vite
+Backend:   Express.js + MongoDB + Mongoose
+State:     React Context API
+Routing:   React Router DOM
+Icons:     Lucide React
+```
 
 ---
 
-## 👨‍💻 Developer
+## 📝 License
 
-Built with ❤️ as a MERN stack project demonstrating:
-- Rule-based decision engines
-- Full-stack API design
-- React component architecture
-- MongoDB schema design
-- Responsive UI with Tailwind CSS
+Built as a MERN stack project for AI Personalized Skincare Advisor.
+
+---
+
+> **Built with ❤️ using the MERN Stack**

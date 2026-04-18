@@ -1,5 +1,5 @@
 {
-  "name": "skincare-advisor-server",
+  "name": "skincare-advisor-backend",
   "version": "1.0.0",
   "description": "AI Personalized Skincare Advisor - Backend Server",
   "main": "server.js",

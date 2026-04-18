@@ -89,3 +89,40 @@ export interface SampleProduct {
   ingredients: string;
   suitableSkinTypes: SkinType[];
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 2: SKIN TYPE DETECTION TYPES
+// ─────────────────────────────────────────────────────────────
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: { value: string; label: string; emoji: string }[];
+}
+
+export interface QuizAnswer {
+  questionId: number;
+  answer: string;
+}
+
+export interface SkinDetectionResult {
+  skinType: SkinType;
+  confidence: number;
+  method: 'questionnaire' | 'image';
+  breakdown?: Record<string, number>;
+  explanation: string;
+  indicators?: {
+    brightness?: number;
+    redness?: number;
+    saturation?: number;
+    scores?: Record<string, number>;
+  };
+}
+
+export interface SkinContextType {
+  detectedSkinType: SkinType | '';
+  detectionMethod: 'questionnaire' | 'image' | '';
+  detectionConfidence: number;
+  setDetectedSkinType: (type: SkinType, method: 'questionnaire' | 'image', confidence: number) => void;
+  clearDetection: () => void;
+}

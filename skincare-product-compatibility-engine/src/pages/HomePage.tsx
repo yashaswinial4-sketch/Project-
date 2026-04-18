@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -50,6 +50,13 @@ const HomePage: React.FC = () => {
                 Predict Acne Risk
               </button>
               <button
+                onClick={() => navigate('/ingredient-analysis')}
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-amber-300/50"
+              >
+                <BookOpen size={22} />
+                Analyze Ingredients
+              </button>
+              <button
                 onClick={() => navigate('/progress')}
                 className="inline-flex items-center gap-3 px-7 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-indigo-300/50"
               >
@@ -61,10 +68,12 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Skin Type Detection Feature Highlight */}
+      {/* Feature Highlight Sections */}
       <section className="py-20 bg-gradient-to-b from-white to-emerald-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden mb-8">
+        <div className="max-w-6xl mx-auto px-6 space-y-8">
+
+          {/* Skin Type Detection */}
+          <div className="bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="relative grid md:grid-cols-2 gap-8 items-center">
               <div>
@@ -105,8 +114,8 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Acne Risk Prediction Feature Highlight */}
-          <div className="bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden mb-8">
+          {/* Acne Risk Prediction */}
+          <div className="bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             <div className="relative grid md:grid-cols-2 gap-8 items-center">
@@ -148,7 +157,50 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Progress Tracking Feature Highlight */}
+          {/* Ingredient Analysis & XAI — NEW */}
+          <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-red-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="relative grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">
+                  <Lightbulb size={14} /> TASK 5 — Ingredient Analysis & XAI
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4">
+                  Know What You Put On Your Skin
+                </h2>
+                <p className="text-white/80 text-lg mb-6">
+                  Our Explainable AI breaks down every ingredient — what it does, why it works for YOUR skin type, possible side effects, and harmful combinations. Full transparency, zero guessing.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Search size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">25+ Ingredient Profiles</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Lightbulb size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Explainable AI (XAI)</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <BookOpen size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Combination Detection</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/ingredient-analysis')}
+                  className="flex items-center gap-3 px-8 py-5 bg-white text-amber-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-amber-800 transition-all duration-300 shadow-2xl hover:-translate-y-1"
+                >
+                  <BookOpen size={24} />
+                  Analyze Ingredients
+                  <ArrowRight size={24} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Tracking */}
           <div className="bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
@@ -237,28 +289,18 @@ const HomePage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-4">
-              Four Powerful Tools for Your Skin
+              Five Powerful Tools for Your Skin
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Detect, analyze, predict, and track — everything you need for a safer skincare routine.
+              Detect, analyze, predict, understand, and track — everything you need for a safer skincare routine.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
               {
-                icon: <Target size={36} />,
-                title: 'Skin Type Detection',
-                desc: 'Take our 8-question quiz or upload a photo to identify your skin type automatically.',
-                color: 'bg-violet-100 text-violet-600',
-                border: 'hover:border-violet-200',
-                action: () => navigate('/skin-type'),
-                tag: 'Task 2',
-                tagColor: 'bg-violet-100 text-violet-700',
-              },
-              {
-                icon: <Shield size={36} />,
+                icon: <Shield size={32} />,
                 title: 'Product Analysis',
-                desc: 'Enter your current skincare products and we\'ll detect harmful ingredient combinations.',
+                desc: 'Enter your current skincare products and detect harmful ingredient combinations.',
                 color: 'bg-emerald-100 text-emerald-600',
                 border: 'hover:border-emerald-200',
                 action: () => navigate('/analyze'),
@@ -266,9 +308,19 @@ const HomePage: React.FC = () => {
                 tagColor: 'bg-emerald-100 text-emerald-700',
               },
               {
-                icon: <AlertTriangle size={36} />,
+                icon: <Target size={32} />,
+                title: 'Skin Type Detection',
+                desc: 'Take our 8-question quiz or upload a photo to identify your skin type.',
+                color: 'bg-violet-100 text-violet-600',
+                border: 'hover:border-violet-200',
+                action: () => navigate('/skin-type'),
+                tag: 'Task 2',
+                tagColor: 'bg-violet-100 text-violet-700',
+              },
+              {
+                icon: <AlertTriangle size={32} />,
                 title: 'Acne Risk Prediction',
-                desc: 'Analyze habits, products, and routine gaps to predict your acne risk with personalized tips.',
+                desc: 'Analyze habits, products, and routine gaps to predict your acne risk.',
                 color: 'bg-rose-100 text-rose-600',
                 border: 'hover:border-rose-200',
                 action: () => navigate('/acne-risk'),
@@ -276,31 +328,41 @@ const HomePage: React.FC = () => {
                 tagColor: 'bg-rose-100 text-rose-700',
               },
               {
-                icon: <TrendingUp size={36} />,
+                icon: <TrendingUp size={32} />,
                 title: 'Progress Tracking',
-                desc: 'Upload skin photos, compare before & after, track lifestyle impact on your skin health.',
+                desc: 'Upload photos, compare before & after, track lifestyle impact.',
                 color: 'bg-indigo-100 text-indigo-600',
                 border: 'hover:border-indigo-200',
                 action: () => navigate('/progress'),
                 tag: 'Task 4',
                 tagColor: 'bg-indigo-100 text-indigo-700',
               },
+              {
+                icon: <BookOpen size={32} />,
+                title: 'Ingredient Analysis',
+                desc: 'Deep-dive into ingredients with Explainable AI — know WHY it works for YOU.',
+                color: 'bg-amber-100 text-amber-600',
+                border: 'hover:border-amber-200',
+                action: () => navigate('/ingredient-analysis'),
+                tag: 'Task 5',
+                tagColor: 'bg-amber-100 text-amber-700',
+              },
             ].map((item, i) => (
               <div
                 key={i}
                 onClick={item.action}
-                className={`bg-white rounded-3xl p-8 border-2 border-gray-100 ${item.border} hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+                className={`bg-white rounded-3xl p-6 border-2 border-gray-100 ${item.border} hover:shadow-xl transition-all duration-300 cursor-pointer group`}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
                     {item.icon}
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${item.tagColor}`}>
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${item.tagColor}`}>
                     {item.tag}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">{item.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -310,16 +372,17 @@ const HomePage: React.FC = () => {
       {/* Stats Section */}
       <section className="py-20 bg-emerald-600 text-white">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {[
               { value: '22+', label: 'Conflict Rules' },
+              { value: '25+', label: 'Ingredient Profiles' },
               { value: '40+', label: 'Ingredients Tracked' },
               { value: '12+', label: 'Habit Factors' },
-              { value: '4', label: 'Smart Tools' },
+              { value: '5', label: 'Smart Tools' },
             ].map((stat, i) => (
               <div key={i}>
-                <div className="text-4xl md:text-5xl font-black text-yellow-300 mb-2">{stat.value}</div>
-                <div className="text-emerald-100 font-medium">{stat.label}</div>
+                <div className="text-3xl md:text-5xl font-black text-yellow-300 mb-2">{stat.value}</div>
+                <div className="text-emerald-100 font-medium text-sm md:text-base">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -334,35 +397,42 @@ const HomePage: React.FC = () => {
               Ready to Transform Your Skincare?
             </h2>
             <p className="text-xl text-gray-500 mb-8 max-w-xl mx-auto">
-              Start with any of our four powerful tools — or use all of them for the complete experience.
+              Start with any of our five powerful tools — or use all of them for the complete experience.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
               <button
                 onClick={() => navigate('/skin-type')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-violet-600 text-white rounded-2xl font-bold text-lg hover:bg-violet-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-violet-600 text-white rounded-2xl font-bold hover:bg-violet-700 transition-all shadow-xl hover:-translate-y-0.5"
               >
-                <Target size={22} />
+                <Target size={18} />
                 Detect Skin Type
               </button>
               <button
                 onClick={() => navigate('/analyze')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-emerald-600 text-white rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-xl hover:-translate-y-0.5"
               >
                 Analyze Products
-                <ArrowRight size={24} />
+                <ArrowRight size={18} />
               </button>
               <button
                 onClick={() => navigate('/acne-risk')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-rose-600 text-white rounded-2xl font-bold text-lg hover:bg-rose-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-rose-600 text-white rounded-2xl font-bold hover:bg-rose-700 transition-all shadow-xl hover:-translate-y-0.5"
               >
-                <AlertTriangle size={22} />
+                <AlertTriangle size={18} />
                 Predict Acne Risk
               </button>
               <button
-                onClick={() => navigate('/progress')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                onClick={() => navigate('/ingredient-analysis')}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white rounded-2xl font-bold hover:bg-amber-600 transition-all shadow-xl hover:-translate-y-0.5"
               >
-                <TrendingUp size={22} />
+                <BookOpen size={18} />
+                Analyze Ingredients
+              </button>
+              <button
+                onClick={() => navigate('/progress')}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-xl hover:-translate-y-0.5"
+              >
+                <TrendingUp size={18} />
                 Track Progress
               </button>
             </div>
@@ -383,10 +453,10 @@ const HomePage: React.FC = () => {
             <span className="text-white font-bold text-lg">AI Skincare Advisor</span>
           </div>
           <p className="text-sm">
-            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking
+            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking • Task 5: Ingredient Analysis & XAI
           </p>
           <p className="text-xs mt-4 text-gray-600">
-            Built with React + Express + MongoDB • MERN Stack
+            Built with React + Express + MongoDB • MERN Stack • Explainable AI
           </p>
         </div>
       </footer>

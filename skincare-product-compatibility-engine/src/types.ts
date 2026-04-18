@@ -257,3 +257,63 @@ export interface ImagePreprocessingResult {
   qualityIssues: string[];
   preprocessingSteps: string[];
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 5: INGREDIENT ANALYSIS & EXPLAINABLE AI (XAI) TYPES
+// ─────────────────────────────────────────────────────────────
+
+export interface IngredientInfo {
+  name: string;
+  alternativeNames: string[];
+  category: string;
+  purpose: string;
+  howItWorks: string;
+  benefits: string[];
+  sideEffects: string[];
+  bestFor: string[];
+  avoidFor: string[];
+  usageTips: string;
+  strength: 'gentle' | 'mild' | 'moderate' | 'strong';
+  comedogenicRating: number;
+}
+
+export interface HarmfulCombination {
+  ingredient1: string;
+  ingredient2: string;
+  severity: 'low' | 'medium' | 'high';
+  reason: string;
+  suggestion: string;
+}
+
+export interface AnalyzedIngredient {
+  name: string;
+  matched: boolean;
+  info?: IngredientInfo;
+  suitability: 'excellent' | 'good' | 'caution' | 'avoid' | 'unknown';
+  personalScore: number;
+  reasons: string[];
+  benefits: string[];
+  warnings: string[];
+}
+
+export interface IngredientAlternative {
+  original: string;
+  alternative: string;
+  reason: string;
+  betterFor: string[];
+}
+
+export interface IngredientAnalysisResult {
+  ingredients: AnalyzedIngredient[];
+  overallSafety: 'safe' | 'caution' | 'avoid';
+  overallScore: number;
+  harmfulCombinations: HarmfulCombination[];
+  explanation: string;
+  whyItWorks: string;
+  warnings: string[];
+  recommendations: string[];
+  confidence: number;
+  alternatives: IngredientAlternative[];
+  bestIngredient: string | null;
+  summary: string;
+}

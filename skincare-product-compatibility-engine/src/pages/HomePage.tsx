@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,27 +27,34 @@ const HomePage: React.FC = () => {
             <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-10">
               Stop guessing. Stop damaging your skin. Get instant analysis of your skincare routine with our intelligent ingredient conflict detection system.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
               <button
                 onClick={() => navigate('/analyze')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-emerald-800 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white text-emerald-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-emerald-800 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1"
               >
                 Analyze Your Routine
                 <ArrowRight size={24} />
               </button>
               <button
                 onClick={() => navigate('/skin-type')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/30"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/20 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/30"
               >
                 <Target size={22} />
                 Detect My Skin Type
               </button>
               <button
                 onClick={() => navigate('/acne-risk')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-rose-300/50"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-rose-300/50"
               >
                 <AlertTriangle size={22} />
                 Predict Acne Risk
+              </button>
+              <button
+                onClick={() => navigate('/progress')}
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-indigo-300/50"
+              >
+                <TrendingUp size={22} />
+                Track Progress
               </button>
             </div>
           </div>
@@ -99,7 +106,7 @@ const HomePage: React.FC = () => {
           </div>
 
           {/* Acne Risk Prediction Feature Highlight */}
-          <div className="bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+          <div className="bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden mb-8">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
             <div className="relative grid md:grid-cols-2 gap-8 items-center">
@@ -120,7 +127,7 @@ const HomePage: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
                     <Droplets size={18} className="text-yellow-300" />
-                    <span className="text-sm font-medium">30+ Ingredient Checks</span>
+                    <span className="text-sm font-medium">35+ Ingredient Checks</span>
                   </div>
                   <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
                     <Shield size={18} className="text-yellow-300" />
@@ -135,6 +142,49 @@ const HomePage: React.FC = () => {
                 >
                   <AlertTriangle size={24} />
                   Predict My Acne Risk
+                  <ArrowRight size={24} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Tracking Feature Highlight */}
+          <div className="bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="relative grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">
+                  <BarChart3 size={14} /> TASK 4 — Progress Tracking
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4">
+                  Track Your Skin Journey
+                </h2>
+                <p className="text-white/80 text-lg mb-6">
+                  Upload skin photos over time, compare before & after results, track lifestyle factors like sleep and diet, and see real improvement metrics with our intelligent progress tracker.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <ImagePlus size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Photo Analysis</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <TrendingUp size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Before vs After</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Activity size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Lifestyle Tracking</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/progress')}
+                  className="flex items-center gap-3 px-8 py-5 bg-white text-indigo-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-indigo-800 transition-all duration-300 shadow-2xl hover:-translate-y-1"
+                >
+                  <TrendingUp size={24} />
+                  Start Tracking
                   <ArrowRight size={24} />
                 </button>
               </div>
@@ -187,13 +237,13 @@ const HomePage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-4">
-              Three Powerful Tools for Your Skin
+              Four Powerful Tools for Your Skin
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Detect, analyze, and predict — everything you need for a safer skincare routine.
+              Detect, analyze, predict, and track — everything you need for a safer skincare routine.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 icon: <Target size={36} />,
@@ -225,6 +275,16 @@ const HomePage: React.FC = () => {
                 tag: 'Task 3',
                 tagColor: 'bg-rose-100 text-rose-700',
               },
+              {
+                icon: <TrendingUp size={36} />,
+                title: 'Progress Tracking',
+                desc: 'Upload skin photos, compare before & after, track lifestyle impact on your skin health.',
+                color: 'bg-indigo-100 text-indigo-600',
+                border: 'hover:border-indigo-200',
+                action: () => navigate('/progress'),
+                tag: 'Task 4',
+                tagColor: 'bg-indigo-100 text-indigo-700',
+              },
             ].map((item, i) => (
               <div
                 key={i}
@@ -252,10 +312,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: '14+', label: 'Conflict Rules' },
-              { value: '30+', label: 'Ingredients Tracked' },
+              { value: '22+', label: 'Conflict Rules' },
+              { value: '40+', label: 'Ingredients Tracked' },
               { value: '12+', label: 'Habit Factors' },
-              { value: '3', label: 'Smart Tools' },
+              { value: '4', label: 'Smart Tools' },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-4xl md:text-5xl font-black text-yellow-300 mb-2">{stat.value}</div>
@@ -274,29 +334,36 @@ const HomePage: React.FC = () => {
               Ready to Transform Your Skincare?
             </h2>
             <p className="text-xl text-gray-500 mb-8 max-w-xl mx-auto">
-              Start with any of our three powerful tools — or use all of them for the complete experience.
+              Start with any of our four powerful tools — or use all of them for the complete experience.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
               <button
                 onClick={() => navigate('/skin-type')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-violet-600 text-white rounded-2xl font-bold text-lg hover:bg-violet-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-violet-600 text-white rounded-2xl font-bold text-lg hover:bg-violet-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
               >
                 <Target size={22} />
                 Detect Skin Type
               </button>
               <button
                 onClick={() => navigate('/analyze')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-emerald-600 text-white rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
               >
                 Analyze Products
                 <ArrowRight size={24} />
               </button>
               <button
                 onClick={() => navigate('/acne-risk')}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-rose-600 text-white rounded-2xl font-bold text-lg hover:bg-rose-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-rose-600 text-white rounded-2xl font-bold text-lg hover:bg-rose-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
               >
                 <AlertTriangle size={22} />
                 Predict Acne Risk
+              </button>
+              <button
+                onClick={() => navigate('/progress')}
+                className="inline-flex items-center gap-3 px-7 py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+              >
+                <TrendingUp size={22} />
+                Track Progress
               </button>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-gray-400">
@@ -316,7 +383,7 @@ const HomePage: React.FC = () => {
             <span className="text-white font-bold text-lg">AI Skincare Advisor</span>
           </div>
           <p className="text-sm">
-            Task 1: Ingredient Conflict Detection • Task 2: Skin Type Detection • Task 3: Acne Risk Prediction
+            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking
           </p>
           <p className="text-xs mt-4 text-gray-600">
             Built with React + Express + MongoDB • MERN Stack

@@ -138,7 +138,7 @@ export type AcneSeverity = 'none' | 'mild' | 'moderate' | 'severe';
 export interface AcneHabits {
   currentAcne: AcneSeverity;
   sleepHours: number;
-  waterIntake: number; // glasses per day
+  waterIntake: number;
   dietType: 'balanced' | 'high-sugar' | 'high-dairy' | 'junk-food' | 'healthy';
   stressLevel: 'low' | 'moderate' | 'high' | 'extreme';
   exerciseFrequency: 'none' | '1-2x' | '3-4x' | 'daily';
@@ -175,7 +175,7 @@ export interface AcneTip {
 
 export interface AcneRiskResult {
   riskLevel: AcneRiskLevel;
-  riskScore: number; // 0-100, higher = more risk
+  riskScore: number;
   breakdown: AcneRiskBreakdown;
   triggers: AcneTrigger[];
   safeProducts: string[];
@@ -183,4 +183,77 @@ export interface AcneRiskResult {
   tips: AcneTip[];
   summary: string;
   routineChanges: string[];
+}
+
+// ─────────────────────────────────────────────────────────────
+// TASK 4: PROGRESS TRACKING & LIFESTYLE TYPES
+// ─────────────────────────────────────────────────────────────
+
+export interface LifestyleData {
+  sleepHours: number;
+  waterIntake: number;
+  dietQuality: 'poor' | 'average' | 'good' | 'excellent';
+  stressLevel: 'low' | 'moderate' | 'high';
+  exerciseDays: number; // per week
+  alcoholConsumption: 'none' | 'light' | 'moderate' | 'heavy';
+  smokingStatus: 'non-smoker' | 'occasional' | 'regular';
+  screenTime: number; // hours per day
+}
+
+export interface LifestyleImpact {
+  overallScore: number; // 0-100, higher = better for skin
+  sleepImpact: { score: number; label: string; description: string };
+  hydrationImpact: { score: number; label: string; description: string };
+  dietImpact: { score: number; label: string; description: string };
+  stressImpact: { score: number; label: string; description: string };
+  exerciseImpact: { score: number; label: string; description: string };
+  recommendations: string[];
+}
+
+export interface SkinRecord {
+  _id?: string;
+  userId?: string;
+  date: string;
+  skinType: SkinType;
+  imageUrl?: string;
+  analysisResult?: Partial<AnalysisResult>;
+  acneRisk?: AcneRiskResult;
+  lifestyleData?: LifestyleData;
+  notes?: string;
+  imageMetrics?: ImageMetrics;
+}
+
+export interface ImageMetrics {
+  brightness: number;
+  redness: number;
+  saturation: number;
+  uniformity: number;
+  oiliness: number;
+  dryness: number;
+}
+
+export interface ProgressComparison {
+  before: SkinRecord;
+  after: SkinRecord;
+  improvementScore: number;
+  acneReduction: string;
+  oilChange: string;
+  drynessChange: string;
+  overallChange: string;
+  insights: string[];
+  metricsComparison: {
+    brightness: { before: number; after: number; change: number };
+    redness: { before: number; after: number; change: number };
+    oiliness: { before: number; after: number; change: number };
+    uniformity: { before: number; after: number; change: number };
+  };
+}
+
+export interface ImagePreprocessingResult {
+  originalUrl: string;
+  processedUrl: string;
+  metrics: ImageMetrics;
+  quality: 'poor' | 'fair' | 'good' | 'excellent';
+  qualityIssues: string[];
+  preprocessingSteps: string[];
 }

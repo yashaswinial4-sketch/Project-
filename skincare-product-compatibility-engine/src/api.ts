@@ -1,6 +1,7 @@
-import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult } from '@/types';
+import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult, AcneHabits, AcneRiskResult, Product, SkinType } from '@/types';
 import { analyzeSkincareRoutine, sampleProducts } from '@/logic/skincareRules';
 import { detectSkinType } from '@/logic/skinTypeDetector';
+import { predictAcneRisk } from '@/logic/acneRiskPredictor';
 
 // ── API Configuration ──
 const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000/api';
@@ -86,4 +87,27 @@ export async function analyzeSkinType(
     explanation: 'Image analysis completed with basic heuristics. For more accurate results, consider taking the skin type quiz.',
     indicators: {},
   };
+}
+
+// ── Predict Acne Risk (Task 3) ──
+export async function predictAcneRiskAPI(
+  habits: AcneHabits,
+  products: Product[],
+  skinType: SkinType | ''
+): Promise<AcneRiskResult> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/acne-risk`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ habits, products, skinType })
+      });
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  // Fallback to client-side prediction
+  return predictAcneRisk(habits, products, skinType);
 }

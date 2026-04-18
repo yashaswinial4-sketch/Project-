@@ -126,3 +126,61 @@ export interface SkinContextType {
   setDetectedSkinType: (type: SkinType, method: 'questionnaire' | 'image', confidence: number) => void;
   clearDetection: () => void;
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 3: ACNE RISK PREDICTION TYPES
+// ─────────────────────────────────────────────────────────────
+
+export type AcneRiskLevel = 'low' | 'moderate' | 'high' | 'severe';
+
+export type AcneSeverity = 'none' | 'mild' | 'moderate' | 'severe';
+
+export interface AcneHabits {
+  currentAcne: AcneSeverity;
+  sleepHours: number;
+  waterIntake: number; // glasses per day
+  dietType: 'balanced' | 'high-sugar' | 'high-dairy' | 'junk-food' | 'healthy';
+  stressLevel: 'low' | 'moderate' | 'high' | 'extreme';
+  exerciseFrequency: 'none' | '1-2x' | '3-4x' | 'daily';
+  faceWashFrequency: 'once' | 'twice' | 'thrice' | 'rarely';
+  makeupRemoval: 'always' | 'sometimes' | 'never';
+  pillowcaseChange: 'weekly' | 'biweekly' | 'monthly' | 'rarely';
+  sunscreenUse: 'always' | 'sometimes' | 'never';
+  touchingFace: 'often' | 'sometimes' | 'rarely' | 'never';
+  currentBreakouts: 'none' | 'few' | 'moderate' | 'many';
+}
+
+export interface AcneTrigger {
+  type: 'ingredient' | 'habit' | 'product' | 'routine';
+  name: string;
+  severity: 'low' | 'medium' | 'high';
+  description: string;
+  suggestion: string;
+}
+
+export interface AcneRiskBreakdown {
+  ingredientScore: number;
+  habitScore: number;
+  productScore: number;
+  routineScore: number;
+  skinTypeScore: number;
+}
+
+export interface AcneTip {
+  icon: string;
+  title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low';
+}
+
+export interface AcneRiskResult {
+  riskLevel: AcneRiskLevel;
+  riskScore: number; // 0-100, higher = more risk
+  breakdown: AcneRiskBreakdown;
+  triggers: AcneTrigger[];
+  safeProducts: string[];
+  riskyProducts: { name: string; triggers: string[] }[];
+  tips: AcneTip[];
+  summary: string;
+  routineChanges: string[];
+}

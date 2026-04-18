@@ -317,3 +317,88 @@ export interface IngredientAnalysisResult {
   bestIngredient: string | null;
   summary: string;
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 6: PERSONALIZED ROUTINE GENERATOR TYPES
+// ─────────────────────────────────────────────────────────────
+
+export type BudgetLevel = 'low' | 'medium' | 'high';
+export type RoutineTime = 'morning' | 'night';
+export type SkinGoal = 'glow' | 'acne-free' | 'hydration' | 'anti-aging' | 'oil-control' | 'brightening' | 'barrier-repair';
+
+export interface RoutineInput {
+  skinType: SkinType | '';
+  concerns: SkinConcern[];
+  goals: SkinGoal[];
+  budget: BudgetLevel;
+  acneRisk?: AcneRiskLevel;
+  sensitivity?: 'low' | 'medium' | 'high';
+  includeAcneTreatment?: boolean;
+}
+
+export interface RoutineStep {
+  stepNumber: number;
+  name: string;
+  timeOfDay: RoutineTime;
+  category: string;
+  description: string;
+  ingredientFocus: string[];
+  keyIngredients: string[];
+  applicationTip: string;
+  durationNote: string;
+  isOptional: boolean;
+  importance: 'essential' | 'recommended' | 'optional';
+  productRecommendation: ProductRecommendation;
+  explanation: string;
+  warnings: string[];
+}
+
+export interface ProductRecommendation {
+  name: string;
+  brand: string;
+  priceRange: string;
+  priceValue: number;
+  currency: string;
+  keyIngredients: string[];
+  whyRecommended: string;
+  budgetLevel: BudgetLevel;
+  rating: number;
+  availability: string;
+}
+
+export interface BudgetAlternative {
+  originalProduct: string;
+  originalPrice: string;
+  alternative: ProductRecommendation;
+  savingsAmount: string;
+  savingsPercent: number;
+  tradeoffNote: string;
+}
+
+export interface RoutineDay {
+  timeOfDay: RoutineTime;
+  title: string;
+  emoji: string;
+  steps: RoutineStep[];
+}
+
+export interface RoutineExplainability {
+  overallExplanation: string;
+  whyThisRoutine: string;
+  keyDecisions: { decision: string; reason: string }[];
+  customizationNotes: string[];
+  estimatedImprovement: string;
+  weeklyVariationTip: string;
+}
+
+export interface RoutineResult {
+  morningRoutine: RoutineDay;
+  nightRoutine: RoutineDay;
+  totalSteps: number;
+  estimatedTimeMinutes: { morning: number; night: number };
+  budgetBreakdown: { low: string; medium: string; high: string };
+  explanations: RoutineExplainability;
+  weeklyTips: string[];
+  seasonalNotes: string[];
+  routineQualityScore: number;
+}

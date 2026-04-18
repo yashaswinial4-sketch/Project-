@@ -7,6 +7,7 @@ import productRoutes from './routes/products.js';
 import skinAnalyzeRoutes from './routes/skinAnalyze.js';
 import acneRiskRoutes from './routes/acneRisk.js';
 import skinRoutes from './routes/skin.js';
+import routineRoutes from './routes/routine.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/analyze-skin', skinAnalyzeRoutes);
 app.use('/api/acne-risk', acneRiskRoutes);
 app.use('/api/skin', skinRoutes);
+app.use('/api/routine', routineRoutes);
 
 // ── Health Check ──
 app.get('/api/health', (req, res) => {
@@ -34,7 +36,9 @@ app.get('/api/health', (req, res) => {
       'Task 1: Ingredient Conflict Detection',
       'Task 2: Skin Type Detection',
       'Task 3: Acne Risk Prediction',
-      'Task 4: Progress Tracking & Lifestyle Integration'
+      'Task 4: Progress Tracking & Lifestyle Integration',
+      'Task 5: Ingredient Analysis & Explainable AI',
+      'Task 6: Personalized Routine Generator'
     ],
     timestamp: new Date().toISOString()
   });
@@ -45,25 +49,26 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/skincare_a
 
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
   })
   .catch((err) => {
-    console.warn('⚠️ MongoDB connection failed. Server will run with sample data only.');
+    console.warn('MongoDB connection failed. Server will run with sample data only.');
     console.warn('Error:', err.message);
   });
 
 // ── Start Server ──
 app.listen(PORT, () => {
-  console.log(`🚀 Skincare Advisor API running on http://localhost:${PORT}`);
-  console.log(`📋 API Endpoints:`);
-  console.log(`   POST /api/analyze        — Analyze skincare routine (Task 1)`);
-  console.log(`   POST /api/analyze-skin   — Detect skin type (Task 2)`);
-  console.log(`   GET  /api/products       — Get sample products`);
-  console.log(`   POST /api/acne-risk      — Predict acne risk (Task 3)`);
-  console.log(`   POST /api/skin/save-record — Save skin record (Task 4)`);
-  console.log(`   GET  /api/skin/history   — Get skin history (Task 4)`);
-  console.log(`   GET  /api/skin/compare   — Compare records (Task 4)`);
-  console.log(`   POST /api/skin/analyze-image — Analyze image (Task 4)`);
-  console.log(`   POST /api/lifestyle-impact — Lifestyle impact (Task 4)`);
-  console.log(`   GET  /api/health         — Health check`);
+  console.log(`Skincare Advisor API running on http://localhost:${PORT}`);
+  console.log(`API Endpoints:`);
+  console.log(`   POST /api/analyze           -- Analyze skincare routine (Task 1)`);
+  console.log(`   POST /api/analyze-skin      -- Detect skin type (Task 2)`);
+  console.log(`   GET  /api/products          -- Get sample products`);
+  console.log(`   POST /api/acne-risk         -- Predict acne risk (Task 3)`);
+  console.log(`   POST /api/skin/save-record  -- Save skin record (Task 4)`);
+  console.log(`   GET  /api/skin/history      -- Get skin history (Task 4)`);
+  console.log(`   GET  /api/skin/compare      -- Compare records (Task 4)`);
+  console.log(`   POST /api/skin/analyze-image -- Analyze image (Task 4)`);
+  console.log(`   POST /api/lifestyle-impact  -- Lifestyle impact (Task 4)`);
+  console.log(`   POST /api/routine/generate  -- Generate routine (Task 6)`);
+  console.log(`   GET  /api/health            -- Health check`);
 });

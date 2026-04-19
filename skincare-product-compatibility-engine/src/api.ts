@@ -242,3 +242,24 @@ export async function generateRoutineAPI(input: RoutineInput): Promise<RoutineRe
   }
   return generateRoutine(input);
 }
+
+// ── Unified Analysis (Task 7) ──
+import type { UnifiedAnalysisInput, UnifiedAnalysisResult } from '@/types';
+import { runUnifiedAnalysis } from '@/logic/unifiedAnalysisEngine';
+
+export async function unifiedAnalysisAPI(input: UnifiedAnalysisInput): Promise<UnifiedAnalysisResult> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/analyze-complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input)
+      });
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  return runUnifiedAnalysis(input);
+}

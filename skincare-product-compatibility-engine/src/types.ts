@@ -319,86 +319,176 @@ export interface IngredientAnalysisResult {
 }
 
 // ─────────────────────────────────────────────────────────────
-// TASK 6: PERSONALIZED ROUTINE GENERATOR TYPES
+// TASK 6: PERSONALIZED DAILY ROUTINE GENERATOR
 // ─────────────────────────────────────────────────────────────
 
 export type BudgetLevel = 'low' | 'medium' | 'high';
-export type RoutineTime = 'morning' | 'night';
-export type SkinGoal = 'glow' | 'acne-free' | 'hydration' | 'anti-aging' | 'oil-control' | 'brightening' | 'barrier-repair';
+
+export type SkinGoal = 'glow' | 'acne-free' | 'hydration' | 'anti-aging' | 'brightening' | 'oil-control' | 'sensitive-care' | 'even-tone';
 
 export interface RoutineInput {
   skinType: SkinType | '';
   concerns: SkinConcern[];
   goals: SkinGoal[];
   budget: BudgetLevel;
-  acneRisk?: AcneRiskLevel;
-  sensitivity?: 'low' | 'medium' | 'high';
-  includeAcneTreatment?: boolean;
+  acneRisk?: string;
+  sleepHours?: number;
+  waterIntake?: number;
 }
 
 export interface RoutineStep {
-  stepNumber: number;
+  order: number;
   name: string;
-  timeOfDay: RoutineTime;
-  category: string;
+  timeOfDay: 'morning' | 'night';
+  productType: string;
+  emoji: string;
   description: string;
   ingredientFocus: string[];
-  keyIngredients: string[];
-  applicationTip: string;
-  durationNote: string;
-  isOptional: boolean;
-  importance: 'essential' | 'recommended' | 'optional';
-  productRecommendation: ProductRecommendation;
-  explanation: string;
-  warnings: string[];
+  whyIncluded: string;
+  optional: boolean;
+  durationTip: string;
 }
 
-export interface ProductRecommendation {
+export interface RecommendedProduct {
+  id: string;
   name: string;
   brand: string;
+  priceCategory: BudgetLevel;
   priceRange: string;
-  priceValue: number;
-  currency: string;
+  actualPrice: number;
   keyIngredients: string[];
   whyRecommended: string;
-  budgetLevel: BudgetLevel;
+  suitableFor: string[];
   rating: number;
-  availability: string;
+  stepType: string;
+  imageUrl?: string;
 }
 
 export interface BudgetAlternative {
-  originalProduct: string;
-  originalPrice: string;
-  alternative: ProductRecommendation;
-  savingsAmount: string;
-  savingsPercent: number;
-  tradeoffNote: string;
+  originalProduct: RecommendedProduct;
+  alternative: RecommendedProduct;
+  savingsAmount: number;
+  savings: string;
+  comparisonNotes: string;
+  valueForMoney: 'excellent' | 'good' | 'fair';
 }
 
-export interface RoutineDay {
-  timeOfDay: RoutineTime;
-  title: string;
+export interface DayRoutine {
+  timeOfDay: 'morning' | 'night';
   emoji: string;
+  title: string;
+  subtitle: string;
   steps: RoutineStep[];
+  products: RecommendedProduct[];
+  alternatives: BudgetAlternative[];
 }
 
-export interface RoutineExplainability {
-  overallExplanation: string;
-  whyThisRoutine: string;
-  keyDecisions: { decision: string; reason: string }[];
-  customizationNotes: string[];
-  estimatedImprovement: string;
-  weeklyVariationTip: string;
+export interface RoutineExplanation {
+  overall: string;
+  whyItWorks: string;
+  morningFocus: string;
+  nightFocus: string;
+  keyIngredients: string[];
+  expectedResults: string[];
 }
 
 export interface RoutineResult {
-  morningRoutine: RoutineDay;
-  nightRoutine: RoutineDay;
-  totalSteps: number;
-  estimatedTimeMinutes: { morning: number; night: number };
-  budgetBreakdown: { low: string; medium: string; high: string };
-  explanations: RoutineExplainability;
-  weeklyTips: string[];
+  morningRoutine: DayRoutine;
+  nightRoutine: DayRoutine;
+  explanation: RoutineExplanation;
+  tips: string[];
+  weeklyVariations: string[];
   seasonalNotes: string[];
-  routineQualityScore: number;
+  routineScore: number;
+  totalProducts: number;
+  estimatedMonthlyCost: string;
+}
+
+// ─────────────────────────────────────────────────────────────
+// TASK 7: UNIFIED ANALYSIS DASHBOARD (INTEGRATION OF ALL MODULES)
+// ─────────────────────────────────────────────────────────────
+
+export interface UnifiedAnalysisInput {
+  skinType?: SkinType | '';
+  imageData?: string; // base64 data URL for image analysis
+  sleepHours: number;
+  waterIntake: number;
+  dietQuality: 'poor' | 'average' | 'good' | 'excellent';
+  stressLevel: 'low' | 'moderate' | 'high';
+  exerciseDays: number;
+  products: { name: string; ingredients: string }[];
+  concerns: SkinConcern[];
+  goals: SkinGoal[];
+  budget: BudgetLevel;
+}
+
+export interface SkinTypeSection {
+  skinType: SkinType;
+  confidence: number;
+  method: 'image' | 'manual' | 'questionnaire';
+  explanation: string;
+  indicators?: {
+    brightness?: number;
+    redness?: number;
+    saturation?: number;
+  };
+  breakdown?: Record<string, number>;
+}
+
+export interface AcneRiskSection {
+  riskLevel: AcneRiskLevel;
+  riskScore: number;
+  breakdown: AcneRiskBreakdown;
+  topTriggers: AcneTrigger[];
+  summary: string;
+  routineChanges: string[];
+}
+
+export interface IngredientSafetySection {
+  overallSafety: 'safe' | 'caution' | 'avoid';
+  overallScore: number;
+  safeProducts: string[];
+  riskyProducts: string[];
+  harmfulCombinations: HarmfulCombination[];
+  bestIngredient: string | null;
+  worstIngredient: string | null;
+  recommendations: string[];
+}
+
+export interface LifestyleSection {
+  overallScore: number;
+  sleepScore: number;
+  hydrationScore: number;
+  dietScore: number;
+  stressScore: number;
+  recommendations: string[];
+  impact: 'positive' | 'neutral' | 'negative';
+}
+
+export interface RoutinePreviewSection {
+  morningSteps: string[];
+  nightSteps: string[];
+  keyIngredients: string[];
+  estimatedCost: string;
+  routineScore: number;
+}
+
+export interface UnifiedExplanation {
+  overallSummary: string;
+  whyItWorks: string;
+  keyInsights: string[];
+  actionItems: string[];
+  confidence: number;
+}
+
+export interface UnifiedAnalysisResult {
+  overallScore: number;
+  overallGrade: 'A+' | 'A' | 'B+' | 'B' | 'C+' | 'C' | 'D' | 'F';
+  skinType: SkinTypeSection;
+  acneRisk: AcneRiskSection;
+  ingredientSafety: IngredientSafetySection;
+  lifestyle: LifestyleSection;
+  routinePreview: RoutinePreviewSection;
+  explanation: UnifiedExplanation;
+  timestamp: string;
 }

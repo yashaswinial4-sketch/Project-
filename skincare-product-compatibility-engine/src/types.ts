@@ -492,3 +492,118 @@ export interface UnifiedAnalysisResult {
   explanation: UnifiedExplanation;
   timestamp: string;
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 8: SMART SIMPLE ANALYSIS (REAL-WORLD HANDLING)
+// ─────────────────────────────────────────────────────────────
+
+export interface SimpleAnalysisInput {
+  /** Optional — user can skip image upload entirely */
+  imageData?: string;
+  /** Optional — auto-detected or manually selected */
+  skinType?: SkinType | '';
+  /** Optional — estimated if not provided */
+  acneLevel?: 'none' | 'mild' | 'moderate' | 'severe';
+  /** Optional — minimal lifestyle info */
+  sleepHours?: number;
+  waterGlasses?: number;
+  stressLevel?: 'low' | 'moderate' | 'high';
+}
+
+export interface ImageQualityReport {
+  /** Overall quality verdict */
+  quality: 'excellent' | 'good' | 'fair' | 'poor' | 'not_provided';
+  /** 0-100 score */
+  qualityScore: number;
+  /** Specific issues detected */
+  issues: string[];
+  /** Suggestions to improve */
+  suggestions: string[];
+  /** Whether results may be less accurate */
+  affectsAccuracy: boolean;
+  /** Friendly user-facing message */
+  message: string;
+}
+
+export interface DataCompletenessReport {
+  /** 0-100 how complete the input was */
+  completenessScore: number;
+  /** Which fields were provided vs missing */
+  provided: string[];
+  missing: string[];
+  /** What defaults were applied */
+  defaultsApplied: { field: string; defaultValue: string; reason: string }[];
+  /** Friendly message about data quality */
+  message: string;
+}
+
+export interface SimpleRoutineStep {
+  step: number;
+  name: string;
+  emoji: string;
+  productType: string;
+  description: string;
+  /** Beginner-friendly explanation */
+  whyNeeded: string;
+  /** Example product at the right budget */
+  exampleProduct: string;
+  /** Key ingredient to look for */
+  keyIngredient: string;
+  /** How long to leave on / use */
+  usageTip: string;
+  /** Whether this step can be skipped */
+  optional: boolean;
+}
+
+export interface SimpleRoutine {
+  morning: SimpleRoutineStep[];
+  night: SimpleRoutineStep[];
+}
+
+export interface SimpleProductSuggestion {
+  category: string;
+  emoji: string;
+  productName: string;
+  keyIngredient: string;
+  whySafe: string;
+  budgetTip: string;
+  suitableFor: string[];
+}
+
+export interface SimpleExplanation {
+  /** One-sentence summary for the user */
+  headline: string;
+  /** "Why this routine works for you" */
+  whyItWorks: string;
+  /** Step-by-step simple reasoning */
+  reasoning: string[];
+  /** Things to watch out for */
+  cautions: string[];
+  /** Encouraging note */
+  encouragement: string;
+}
+
+export interface SimpleAnalysisResult {
+  /** Detected or assumed skin type */
+  skinType: SkinType;
+  /** How the skin type was determined */
+  skinTypeMethod: 'image' | 'manual' | 'default';
+  /** Estimated acne risk level */
+  acneRisk: 'low' | 'moderate' | 'high';
+  /** The personalized routine */
+  routine: SimpleRoutine;
+  /** Safe product suggestions */
+  safeProducts: SimpleProductSuggestion[];
+  /** Simple explanations */
+  explanation: SimpleExplanation;
+  /** Image quality report */
+  imageQuality: ImageQualityReport;
+  /** Data completeness report */
+  dataCompleteness: DataCompletenessReport;
+  /** Any warnings about the analysis */
+  warnings: string[];
+  /** Overall confidence in the result (0-100) */
+  confidence: number;
+  /** Timestamp */
+  timestamp: string;
+}

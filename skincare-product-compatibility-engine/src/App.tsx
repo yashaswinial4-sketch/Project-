@@ -10,6 +10,7 @@ import ProgressPage from './pages/ProgressPage';
 import IngredientAnalysisPage from './pages/IngredientAnalysisPage';
 import RoutineGeneratorPage from './pages/RoutineGeneratorPage';
 import DashboardPage from './pages/DashboardPage';
+import SimpleAnalysisPage from './pages/SimpleAnalysisPage';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Route path="/progress" element={<ProgressPage />} />
             <Route path="/ingredient-analysis" element={<IngredientAnalysisPage />} />
             <Route path="/routine" element={<RoutineGeneratorPage />} />
+            <Route path="/simple-analysis" element={<SimpleAnalysisPage />} />
           </Routes>
         </div>
       </Router>

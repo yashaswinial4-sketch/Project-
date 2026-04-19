@@ -7,6 +7,7 @@ import AnalysisPage from './pages/AnalysisPage';
 import ResultPage from './pages/ResultPage';
 import AcneRiskPage from './pages/AcneRiskPage';
 import ProgressPage from './pages/ProgressPage';
+import IngredientAnalysisPage from './pages/IngredientAnalysisPage';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Route path="/result" element={<ResultPage />} />
             <Route path="/acne-risk" element={<AcneRiskPage />} />
             <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/ingredient-analysis" element={<IngredientAnalysisPage />} />
           </Routes>
         </div>
       </Router>

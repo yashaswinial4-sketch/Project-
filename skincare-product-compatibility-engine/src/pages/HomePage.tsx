@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, DollarSign, Sun } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, Leaf, IndianRupee, Star } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,11 +29,18 @@ const HomePage: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
               <button
+                onClick={() => navigate('/dashboard')}
+                className="inline-flex items-center gap-3 px-8 py-5 bg-white text-emerald-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-emerald-800 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1 ring-2 ring-yellow-300/50"
+              >
+                <Sparkles size={24} />
+                Complete Skin Analysis
+                <ArrowRight size={24} />
+              </button>
+              <button
                 onClick={() => navigate('/analyze')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-white text-emerald-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-emerald-800 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-1"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/20 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-white/30"
               >
                 Analyze Your Routine
-                <ArrowRight size={24} />
               </button>
               <button
                 onClick={() => navigate('/skin-type')}
@@ -65,7 +72,7 @@ const HomePage: React.FC = () => {
               </button>
               <button
                 onClick={() => navigate('/routine')}
-                className="inline-flex items-center gap-3 px-7 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border-2 border-teal-200/60"
+                className="inline-flex items-center gap-3 px-7 py-4 bg-yellow-300 text-emerald-800 rounded-2xl font-bold text-lg hover:bg-yellow-200 transition-all duration-300 shadow-xl hover:-translate-y-1"
               >
                 <Calendar size={22} />
                 Build My Routine
@@ -164,7 +171,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Ingredient Analysis & XAI */}
+          {/* Ingredient Analysis & XAI — NEW */}
           <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-red-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
@@ -201,50 +208,6 @@ const HomePage: React.FC = () => {
                 >
                   <BookOpen size={24} />
                   Analyze Ingredients
-                  <ArrowRight size={24} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Routine Generator — TASK 6 NEW */}
-          <div className="bg-gradient-to-br from-teal-500 via-cyan-500 to-sky-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-yellow-200/10 rounded-full blur-2xl"></div>
-            <div className="relative grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">
-                  <Calendar size={14} /> TASK 6 — Personalized Routine Generator
-                </div>
-                <h2 className="text-3xl md:text-4xl font-black mb-4">
-                  Your Perfect Routine, Built For You
-                </h2>
-                <p className="text-white/80 text-lg mb-6">
-                  Tell us your skin type, concerns, and goals — we generate a complete morning & night routine with dermatologist-recommended products that fit YOUR budget. Student-friendly options included.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
-                    <Sun size={18} className="text-yellow-300" />
-                    <span className="text-sm font-medium">AM + PM Routine</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
-                    <DollarSign size={18} className="text-yellow-300" />
-                    <span className="text-sm font-medium">Budget-Friendly</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
-                    <Lightbulb size={18} className="text-yellow-300" />
-                    <span className="text-sm font-medium">Full Explainability</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  onClick={() => navigate('/routine')}
-                  className="flex items-center gap-3 px-8 py-5 bg-white text-teal-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-teal-800 transition-all duration-300 shadow-2xl hover:-translate-y-1"
-                >
-                  <Calendar size={24} />
-                  Build My Routine
                   <ArrowRight size={24} />
                 </button>
               </div>
@@ -293,6 +256,110 @@ const HomePage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Routine Generator — TASK 6 */}
+          <div className="bg-gradient-to-br from-teal-500 via-emerald-500 to-green-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="relative grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">
+                  <Leaf size={14} /> TASK 6 — Personalized Routine Generator
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4">
+                  Your Perfect Routine, Built by AI
+                </h2>
+                <p className="text-white/80 text-lg mb-6">
+                  Tell us your skin type, concerns, goals, and budget — get a personalized morning & night routine with real product recommendations and cheaper student-friendly alternatives.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Calendar size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">AM + PM Routine</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <IndianRupee size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Budget Alternatives</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Star size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">45+ Real Products</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/routine')}
+                  className="flex items-center gap-3 px-8 py-5 bg-white text-teal-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-teal-800 transition-all duration-300 shadow-2xl hover:-translate-y-1"
+                >
+                  <Calendar size={24} />
+                  Build My Routine
+                  <ArrowRight size={24} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Unified Dashboard — TASK 7 */}
+          <div className="bg-gradient-to-br from-indigo-500 via-blue-600 to-violet-700 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-pink-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="absolute top-1/2 right-1/4 w-32 h-32 bg-yellow-300/10 rounded-full blur-2xl"></div>
+            <div className="relative grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-300/20 rounded-full text-xs font-semibold mb-4 text-yellow-300">
+                  <Sparkles size={14} /> TASK 7 — Unified Analysis Dashboard (NEW)
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4">
+                  All 6 Modules. One Click.
+                </h2>
+                <p className="text-white/80 text-lg mb-6">
+                  Upload a photo, enter your daily habits, add your products — get a comprehensive skin analysis combining skin type detection, acne risk prediction, ingredient safety, lifestyle impact, and a personalized routine in one unified report.
+                </p>
+                <div className="flex flex-wrap gap-3 mb-6">
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Camera size={16} className="text-yellow-300" />
+                    <span>Image Analysis</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Activity size={16} className="text-yellow-300" />
+                    <span>Acne Risk</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Shield size={16} className="text-yellow-300" />
+                    <span>Ingredient Safety</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Droplets size={16} className="text-yellow-300" />
+                    <span>Lifestyle Score</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Calendar size={16} className="text-yellow-300" />
+                    <span>Routine Preview</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2 text-sm">
+                    <Brain size={16} className="text-yellow-300" />
+                    <span>Explainable AI</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-4">
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="flex items-center gap-3 px-10 py-6 bg-white text-indigo-700 rounded-2xl font-bold text-xl hover:bg-yellow-300 hover:text-indigo-800 transition-all duration-300 shadow-2xl hover:-translate-y-1 w-full justify-center"
+                >
+                  <Sparkles size={28} />
+                  Start Complete Analysis
+                  <ArrowRight size={28} />
+                </button>
+                <div className="flex items-center gap-4 text-sm text-white/60">
+                  <span className="flex items-center gap-1"><CheckCircle2 size={14} className="text-emerald-400" /> 3 easy steps</span>
+                  <span className="flex items-center gap-1"><CheckCircle2 size={14} className="text-emerald-400" /> Instant results</span>
+                  <span className="flex items-center gap-1"><CheckCircle2 size={14} className="text-emerald-400" /> All modules</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -310,17 +377,17 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: '\ud83c\udfb2',
+                icon: '🎲',
                 title: 'Random Product Usage',
                 desc: 'People apply products without understanding ingredient compatibility, leading to acne, irritation, and skin damage.'
               },
               {
-                icon: '\ud83e\udd37',
+                icon: '🤷',
                 title: 'No Personalized Guidance',
                 desc: 'Especially students and young adults lack access to dermatologist advice and personalized skincare recommendations.'
               },
               {
-                icon: '\ud83d\udd34',
+                icon: '🔴',
                 title: 'Hidden Acne Triggers',
                 desc: 'Daily habits like poor sleep, high sugar diet, and not removing makeup are silently causing your breakouts.'
               }
@@ -340,14 +407,24 @@ const HomePage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-4">
-              Six Powerful Tools for Your Skin
+              Seven Powerful Tools for Your Skin
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Detect, analyze, predict, understand, track, and build — everything you need for a safer skincare routine.
+              Detect, analyze, predict, understand, track, build, and get a unified report — everything you need for perfect skincare.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
+              {
+                icon: <Sparkles size={32} />,
+                title: 'Complete Analysis',
+                desc: 'All 6 modules in one unified report — overall score, skin type, acne risk, and more.',
+                color: 'bg-indigo-100 text-indigo-600',
+                border: 'hover:border-indigo-300',
+                action: () => navigate('/dashboard'),
+                tag: 'NEW',
+                tagColor: 'bg-indigo-600 text-white',
+              },
               {
                 icon: <Shield size={32} />,
                 title: 'Product Analysis',
@@ -401,7 +478,7 @@ const HomePage: React.FC = () => {
               {
                 icon: <Calendar size={32} />,
                 title: 'Routine Generator',
-                desc: 'Build a personalized AM/PM routine with budget-friendly product recommendations.',
+                desc: 'Get a personalized AM/PM routine with budget-friendly product recommendations.',
                 color: 'bg-teal-100 text-teal-600',
                 border: 'hover:border-teal-200',
                 action: () => navigate('/routine'),
@@ -437,10 +514,10 @@ const HomePage: React.FC = () => {
             {[
               { value: '22+', label: 'Conflict Rules' },
               { value: '25+', label: 'Ingredient Profiles' },
+              { value: '45+', label: 'Products Database' },
               { value: '40+', label: 'Ingredients Tracked' },
               { value: '12+', label: 'Habit Factors' },
-              { value: '60+', label: 'Products Catalog' },
-              { value: '6', label: 'Smart Tools' },
+              { value: '7', label: 'Smart Tools' },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-3xl md:text-5xl font-black text-yellow-300 mb-2">{stat.value}</div>
@@ -459,12 +536,20 @@ const HomePage: React.FC = () => {
               Ready to Transform Your Skincare?
             </h2>
             <p className="text-xl text-gray-500 mb-8 max-w-xl mx-auto">
-              Start with any of our six powerful tools — or use all of them for the complete experience.
+              Start with the complete analysis or use individual tools — your choice.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
               <button
+                onClick={() => navigate('/dashboard')}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-2xl hover:-translate-y-1 ring-2 ring-indigo-200"
+              >
+                <Sparkles size={20} />
+                Complete Skin Analysis
+                <ArrowRight size={20} />
+              </button>
+              <button
                 onClick={() => navigate('/routine')}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-2xl font-bold hover:bg-teal-700 transition-all shadow-xl hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-2xl font-bold hover:bg-teal-600 transition-all shadow-xl hover:-translate-y-0.5"
               >
                 <Calendar size={18} />
                 Build My Routine
@@ -518,14 +603,14 @@ const HomePage: React.FC = () => {
       <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-2xl">{'\ud83e\uddf4'}</span>
+            <span className="text-2xl">🧴</span>
             <span className="text-white font-bold text-lg">AI Skincare Advisor</span>
           </div>
           <p className="text-sm">
-            Task 1: Conflict Detection {'\u2022'} Task 2: Skin Type {'\u2022'} Task 3: Acne Risk {'\u2022'} Task 4: Progress Tracking {'\u2022'} Task 5: Ingredient XAI {'\u2022'} Task 6: Routine Generator
+            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking • Task 5: Ingredient Analysis & XAI • Task 6: Routine Generator • Task 7: Unified Dashboard
           </p>
           <p className="text-xs mt-4 text-gray-600">
-            Built with React + Express + MongoDB {'\u2022'} MERN Stack {'\u2022'} Explainable AI {'\u2022'} Personalized Recommendations
+            Built with React + Express + MongoDB • MERN Stack • Explainable AI • 7 Modules • 45+ Products
           </p>
         </div>
       </footer>

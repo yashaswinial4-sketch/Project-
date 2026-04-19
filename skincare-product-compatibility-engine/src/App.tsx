@@ -9,6 +9,7 @@ import AcneRiskPage from './pages/AcneRiskPage';
 import ProgressPage from './pages/ProgressPage';
 import IngredientAnalysisPage from './pages/IngredientAnalysisPage';
 import RoutineGeneratorPage from './pages/RoutineGeneratorPage';
+import DashboardPage from './pages/DashboardPage';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <div className="min-h-screen bg-white">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/skin-type" element={<SkinTypePage />} />
             <Route path="/analyze" element={<AnalysisPage />} />
             <Route path="/result" element={<ResultPage />} />

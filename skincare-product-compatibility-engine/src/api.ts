@@ -1,4 +1,7 @@
-import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult, AcneHabits, AcneRiskResult, Product, SkinType, SkinRecord, LifestyleData, LifestyleImpact, ProgressComparison, RoutineInput, RoutineResult } from '@/types';
+import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult, AcneHabits, AcneRiskResult, Product, SkinType, SkinRecord, LifestyleData, LifestyleImpact, ProgressComparison, RoutineInput, RoutineResult, FeedbackEntry, ConsentPreferences, ProgressDashboard } from '@/types';
+import { saveFeedback as saveFeedbackLocal, getAllFeedback, calculateFeedbackStats } from '@/logic/feedbackEngine';
+import { getConsent, saveConsent, generatePrivacyReport, downloadDataExport, deleteSpecificData, checkStorageHealth } from '@/logic/privacyEngine';
+import { generateProgressDashboard } from '@/logic/progressEngine';
 import { analyzeSkincareRoutine, sampleProducts } from '@/logic/skincareRules';
 import { detectSkinType } from '@/logic/skinTypeDetector';
 import { predictAcneRisk } from '@/logic/acneRiskPredictor';
@@ -282,3 +285,55 @@ export async function simpleAnalysisAPI(input: SimpleAnalysisInput): Promise<Sim
   }
   return runSimpleAnalysis(input);
 }
+
+// ── Privacy & Consent (Task 9) ──
+export { getConsent, saveConsent, generatePrivacyReport, downloadDataExport, deleteSpecificData, checkStorageHealth };
+export type { ConsentPreferences };
+
+// ── Feedback (Task 9) ──
+export async function submitFeedback(entry: Omit<FeedbackEntry, '_id' | 'timestamp'>): Promise<FeedbackEntry | null> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry),
+      });
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  return saveFeedbackLocal(entry);
+}
+
+export async function getFeedbackHistory(): Promise<FeedbackEntry[]> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/feedback`);
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  return getAllFeedback();
+}
+
+export { calculateFeedbackStats };
+
+// ── Progress Dashboard (Task 9) ──
+export async function getProgressDashboard(): Promise<ProgressDashboard> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/progress/dashboard`);
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  return generateProgressDashboard();
+}
+

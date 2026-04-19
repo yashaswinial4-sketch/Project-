@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, Leaf, IndianRupee, Star } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, Leaf, IndianRupee, Star, Wand2, Eye } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -76,6 +76,13 @@ const HomePage: React.FC = () => {
               >
                 <Calendar size={22} />
                 Build My Routine
+              </button>
+              <button
+                onClick={() => navigate('/simple-analysis')}
+                className="inline-flex items-center gap-3 px-7 py-4 bg-white/20 backdrop-blur-sm text-white rounded-2xl font-bold text-lg hover:bg-white/30 transition-all duration-300 border-2 border-cyan-300/50"
+              >
+                <Wand2 size={22} />
+                Quick Smart Analysis
               </button>
             </div>
           </div>
@@ -360,6 +367,49 @@ const HomePage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Smart Simple Analysis — TASK 8 */}
+          <div className="bg-gradient-to-br from-cyan-500 via-sky-500 to-blue-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="relative grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4">
+                  <Wand2 size={14} /> TASK 8 — Smart Simple Analysis
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black mb-4">
+                  Quick Analysis That Handles Everything
+                </h2>
+                <p className="text-white/80 text-lg mb-6">
+                  Upload a photo (or skip it), enter a few details (or leave them blank), and get a personalized routine with safe products and plain-language explanations. Our smart engine handles blurry photos, missing data, and gives you honest confidence scores.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Eye size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Image Quality Check</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Shield size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Missing Data Handling</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2">
+                    <Lightbulb size={18} className="text-yellow-300" />
+                    <span className="text-sm font-medium">Simple Explanations</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate('/simple-analysis')}
+                  className="flex items-center gap-3 px-8 py-5 bg-white text-sky-700 rounded-2xl font-bold text-lg hover:bg-yellow-300 hover:text-sky-800 transition-all duration-300 shadow-2xl hover:-translate-y-1"
+                >
+                  <Wand2 size={24} />
+                  Quick Analysis
+                  <ArrowRight size={24} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -407,10 +457,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-4">
-              Seven Powerful Tools for Your Skin
+              Eight Powerful Tools for Your Skin
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Detect, analyze, predict, understand, track, build, and get a unified report — everything you need for perfect skincare.
+              Detect, analyze, predict, understand, track, build, and get quick or unified reports — everything you need for perfect skincare.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -485,6 +535,16 @@ const HomePage: React.FC = () => {
                 tag: 'Task 6',
                 tagColor: 'bg-teal-100 text-teal-700',
               },
+              {
+                icon: <Wand2 size={32} />,
+                title: 'Smart Simple Analysis',
+                desc: 'Quick routine + safe products + explanations. Handles bad photos & missing data gracefully.',
+                color: 'bg-sky-100 text-sky-600',
+                border: 'hover:border-sky-200',
+                action: () => navigate('/simple-analysis'),
+                tag: 'NEW',
+                tagColor: 'bg-sky-600 text-white',
+              },
             ].map((item, i) => (
               <div
                 key={i}
@@ -517,7 +577,7 @@ const HomePage: React.FC = () => {
               { value: '45+', label: 'Products Database' },
               { value: '40+', label: 'Ingredients Tracked' },
               { value: '12+', label: 'Habit Factors' },
-              { value: '7', label: 'Smart Tools' },
+              { value: '8', label: 'Smart Tools' },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-3xl md:text-5xl font-black text-yellow-300 mb-2">{stat.value}</div>
@@ -589,6 +649,13 @@ const HomePage: React.FC = () => {
                 <TrendingUp size={18} />
                 Track Progress
               </button>
+              <button
+                onClick={() => navigate('/simple-analysis')}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500 text-white rounded-2xl font-bold hover:bg-sky-600 transition-all shadow-xl hover:-translate-y-0.5"
+              >
+                <Wand2 size={18} />
+                Quick Smart Analysis
+              </button>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-gray-400">
               <span className="flex items-center gap-1"><CheckCircle2 size={16} className="text-emerald-500" /> No signup required</span>
@@ -607,10 +674,10 @@ const HomePage: React.FC = () => {
             <span className="text-white font-bold text-lg">AI Skincare Advisor</span>
           </div>
           <p className="text-sm">
-            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking • Task 5: Ingredient Analysis & XAI • Task 6: Routine Generator • Task 7: Unified Dashboard
+            Task 1: Ingredient Conflict • Task 2: Skin Type Detection • Task 3: Acne Risk • Task 4: Progress Tracking • Task 5: Ingredient Analysis & XAI • Task 6: Routine Generator • Task 7: Unified Dashboard • Task 8: Smart Simple Analysis
           </p>
           <p className="text-xs mt-4 text-gray-600">
-            Built with React + Express + MongoDB • MERN Stack • Explainable AI • 7 Modules • 45+ Products
+            Built with React + Express + MongoDB • MERN Stack • Explainable AI • 8 Modules • 45+ Products
           </p>
         </div>
       </footer>

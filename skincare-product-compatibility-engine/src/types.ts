@@ -607,3 +607,214 @@ export interface SimpleAnalysisResult {
   /** Timestamp */
   timestamp: string;
 }
+
+// ─────────────────────────────────────────────────────────────
+// TASK 9: PRIVACY, FEEDBACK & PROGRESS TRACKING
+// ─────────────────────────────────────────────────────────────
+
+// ── Consent System ──
+
+export interface ConsentPreferences {
+  /** Allow storing skin analysis results */
+  storeAnalysisResults: boolean;
+  /** Allow storing uploaded images */
+  storeImages: boolean;
+  /** Allow storing lifestyle data */
+  storeLifestyleData: boolean;
+  /** Allow storing feedback */
+  storeFeedback: boolean;
+  /** Allow progress tracking across sessions */
+  enableProgressTracking: boolean;
+  /** User has read and accepted privacy policy */
+  acceptedPrivacyPolicy: boolean;
+  /** Timestamp of last consent update */
+  consentDate: string;
+  /** Unique session ID for anonymous tracking */
+  sessionId: string;
+}
+
+export interface DataExport {
+  records: SkinRecord[];
+  feedback: FeedbackEntry[];
+  consent: ConsentPreferences;
+  exportDate: string;
+  totalEntries: number;
+}
+
+export interface PrivacyReport {
+  /** What data is stored */
+  dataStored: { type: string; count: number; size: string }[];
+  /** How long data is retained */
+  retentionPolicy: string;
+  /** User rights summary */
+  userRights: string[];
+  /** Last data access */
+  lastAccess: string;
+  /** Overall privacy score (0-100) */
+  privacyScore: number;
+  /** Recommendations for better privacy */
+  recommendations: string[];
+}
+
+// ── Feedback System ──
+
+export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
+
+export type FeedbackCategory =
+  | 'accuracy'
+  | 'helpfulness'
+  | 'recommendations'
+  | 'routine'
+  | 'ingredients'
+  | 'overall'
+  | 'bug';
+
+export interface FeedbackEntry {
+  _id: string;
+  /** Which module was used */
+  module: string;
+  /** Star rating 1-5 */
+  rating: FeedbackRating;
+  /** What aspect is being reviewed */
+  category: FeedbackCategory;
+  /** User comment */
+  comment: string;
+  /** Which skin type the user had */
+  userSkinType?: SkinType;
+  /** Timestamp */
+  timestamp: string;
+  /** Whether the user found results accurate */
+  foundAccurate?: boolean;
+  /** What they liked most */
+  likedMost?: string;
+  /** What to improve */
+  improve?: string;
+}
+
+export interface FeedbackStats {
+  /** Total feedback count */
+  totalFeedback: number;
+  /** Average rating */
+  averageRating: number;
+  /** Rating distribution */
+  ratingDistribution: Record<number, number>;
+  /** Sentiment breakdown */
+  positiveCount: number;
+  neutralCount: number;
+  negativeCount: number;
+  /** Most praised module */
+  bestModule: string;
+  /** Most common improvement request */
+  topImprovement: string;
+  /** Category breakdown */
+  categoryBreakdown: Record<FeedbackCategory, number>;
+  /** Trend: is feedback improving over time */
+  trendDirection: 'improving' | 'stable' | 'declining';
+}
+
+export interface FeedbackAnalysis {
+  /** The feedback entry */
+  entry: FeedbackEntry;
+  /** Auto-detected sentiment */
+  sentiment: 'positive' | 'neutral' | 'negative';
+  /** Sentiment confidence (0-1) */
+  sentimentConfidence: number;
+  /** Auto-generated response */
+  autoResponse: string;
+  /** Suggested actions based on feedback */
+  suggestedActions: string[];
+  /** Key phrases detected */
+  keyPhrases: string[];
+}
+
+// ── Enhanced Progress Tracking ──
+
+export interface ProgressTrend {
+  /** Metric being tracked */
+  metric: string;
+  /** Current value */
+  current: number;
+  /** Previous value */
+  previous: number;
+  /** Percentage change */
+  changePercent: number;
+  /** Direction of change */
+  direction: 'improving' | 'stable' | 'declining';
+  /** Trend over last N records */
+  trend: number[];
+  /** Label for display */
+  label: string;
+  /** Emoji for display */
+  emoji: string;
+  /** Color for display */
+  color: string;
+}
+
+export interface ProgressMilestone {
+  _id: string;
+  /** Achievement type */
+  type: 'first_scan' | 'week_streak' | 'improvement_10' | 'improvement_25' | 'improvement_50' | 'consistent_tracker' | 'healthy_lifestyle';
+  /** Title */
+  title: string;
+  /** Description */
+  description: string;
+  /** Emoji */
+  emoji: string;
+  /** Date achieved */
+  achievedDate: string;
+  /** Whether it's been seen */
+  isNew: boolean;
+}
+
+export interface ProgressInsight {
+  /** Insight type */
+  type: 'positive' | 'warning' | 'info' | 'milestone';
+  /** The insight text */
+  text: string;
+  /** Related metric */
+  metric?: string;
+  /** Priority (higher = more important) */
+  priority: number;
+  /** Emoji */
+  emoji: string;
+}
+
+export interface WeeklySummary {
+  /** Week label */
+  weekLabel: string;
+  /** Number of scans this week */
+  scanCount: number;
+  /** Average skin score */
+  avgScore: number;
+  /** Best day */
+  bestDay: string;
+  /** Key changes */
+  changes: string[];
+  /** Rating for the week (auto-calculated) */
+  weekRating: 'excellent' | 'good' | 'fair' | 'needs_work';
+  /** Tips for next week */
+  tips: string[];
+}
+
+export interface ProgressDashboard {
+  /** Overall progress score (0-100) */
+  overallProgress: number;
+  /** Progress direction */
+  direction: 'improving' | 'stable' | 'declining';
+  /** Trends for each metric */
+  trends: ProgressTrend[];
+  /** Achievements unlocked */
+  milestones: ProgressMilestone[];
+  /** Auto-generated insights */
+  insights: ProgressInsight[];
+  /** Weekly summaries */
+  weeklySummaries: WeeklySummary[];
+  /** Total records tracked */
+  totalRecords: number;
+  /** Tracking streak (consecutive weeks) */
+  streakWeeks: number;
+  /** Estimated skin age (fun metric) */
+  skinAgeEstimate: number;
+  /** Confidence of the tracking data */
+  trackingConfidence: number;
+}

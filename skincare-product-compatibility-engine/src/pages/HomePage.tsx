@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, Leaf, IndianRupee, Star, Wand2, Eye } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Sparkles, CheckCircle2, Target, Brain, ClipboardList, Camera, AlertTriangle, Activity, Droplets, TrendingUp, BarChart3, ImagePlus, BookOpen, Lightbulb, Search, Calendar, Leaf, IndianRupee, Star, Wand2, Eye, Lock, MessageSquare } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();

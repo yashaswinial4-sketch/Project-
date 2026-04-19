@@ -1,8 +1,9 @@
-import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult, AcneHabits, AcneRiskResult, Product, SkinType, SkinRecord, LifestyleData, LifestyleImpact, ProgressComparison } from '@/types';
+import type { UserData, AnalysisResult, SampleProduct, SkinDetectionResult, AcneHabits, AcneRiskResult, Product, SkinType, SkinRecord, LifestyleData, LifestyleImpact, ProgressComparison, RoutineInput, RoutineResult } from '@/types';
 import { analyzeSkincareRoutine, sampleProducts } from '@/logic/skincareRules';
 import { detectSkinType } from '@/logic/skinTypeDetector';
 import { predictAcneRisk } from '@/logic/acneRiskPredictor';
 import { calculateLifestyleImpact } from '@/logic/lifestyleImpact';
+import { generateRoutine } from '@/logic/routineGenerator';
 
 // ── API Configuration ──
 const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000/api';
@@ -222,4 +223,22 @@ export async function compareRecords(beforeId: string, afterId: string): Promise
       uniformity: { before: bm.uniformity, after: am.uniformity, change: uniformityChange },
     }
   };
+}
+
+// ── Generate Routine (Task 6) ──
+export async function generateRoutineAPI(input: RoutineInput): Promise<RoutineResult> {
+  if (useBackend) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/routine/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input)
+      });
+      const json = await res.json();
+      if (json.success) return json.data;
+    } catch {
+      useBackend = false;
+    }
+  }
+  return generateRoutine(input);
 }
